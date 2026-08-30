@@ -1,2 +1,0 @@
-# alanjoshy.in
-personal blog
