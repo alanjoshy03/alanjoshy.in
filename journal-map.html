@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Where the bike's been // Alan Joshy</title>
+  <meta name="description"
+    content="A map of weekend rides, hill climbs, and road trips logged on the Hero Xpulse 200." />
+  <meta name="theme-color" content="#12141A" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="journal-map.css" />
+</head>
+
+<body class="map-body">
+
+  <!-- Top Bar -->
+  <header class="map-hud-top">
+    <div class="hud-left">
+      <a href="index.html#journal" class="hud-back-btn" id="hudBackBtn" aria-label="Return to portfolio">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        <span>Alan.</span>
+      </a>
+      <div class="hud-title-wrap">
+        <span class="hud-eyebrow">Trip map</span>
+        <h1 class="hud-title">Where the bike's been</h1>
+      </div>
+    </div>
+
+    <!-- Filters & Theme -->
+    <div class="hud-right">
+      <div class="hud-filters" id="mapFilterGroup">
+        <button class="hud-filter-btn is-active" data-filter="all">All spots</button>
+        <button class="hud-filter-btn" data-filter="highrange">High ranges</button>
+        <button class="hud-filter-btn" data-filter="coastal">Coast</button>
+      </div>
+
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <circle cx="12" cy="12" r="4.2" />
+          <path
+            d="M12 2.5v2.4M12 19.1v2.4M4.6 4.6l1.7 1.7M17.7 17.7l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.6 19.4l1.7-1.7M17.7 6.3l1.7-1.7" />
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20.7 14.6a8.6 8.6 0 0 1-10.3-10.3 8.9 8.9 0 1 0 10.3 10.3z" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Interactive Map Canvas Container -->
+  <div class="map-viewport" id="mapViewport">
+    <!-- Map Surface (Pannable & Zoomable) -->
+    <div class="map-surface" id="mapSurface">
+
+      <!-- Background Cartographic Canvas / SVG Terrain -->
+      <svg class="map-svg-terrain" id="mapSvg" viewBox="0 0 2000 1400" preserveAspectRatio="xMidYMid slice"
+        xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Grid Pattern -->
+          <pattern id="gridPattern" width="100" height="100" patternUnits="userSpaceOnUse">
+            <path d="M 100 0 L 0 0 0 100" fill="none" stroke="currentColor" class="map-grid-line" stroke-width="0.75"
+              opacity="0.1" />
+            <circle cx="100" cy="100" r="1.2" fill="currentColor" opacity="0.15" />
+          </pattern>
+
+          <!-- Terrain Shading Filter -->
+          <filter id="inkGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="10" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
+        </defs>
+
+        <!-- Coordinate Grid Base -->
+        <rect width="2000" height="1400" fill="url(#gridPattern)" />
+
+        <!-- Topographic / Coastal Landmass Outline (Kerala, Western Ghats & Tamil Nadu coastline) -->
+        <g class="terrain-coastline" fill="none" stroke="currentColor" opacity="0.32">
+          <!-- Arabian Sea Coastline contour -->
+          <path d="M 220 100 C 260 280, 240 450, 310 650 C 370 820, 440 980, 560 1150 C 630 1250, 710 1340, 800 1400"
+            stroke-width="2.5" stroke-linecap="round" />
+          <path d="M 180 100 C 220 290, 200 470, 270 670 C 330 840, 400 1000, 520 1170" stroke-width="1"
+            stroke-dasharray="4,6" opacity="0.4" />
+
+          <!-- Bay of Bengal / Indian Ocean East Coast & Dhanushkodi Horn -->
+          <path
+            d="M 800 1400 C 890 1380, 1020 1330, 1180 1260 C 1350 1180, 1540 1060, 1720 920 C 1850 820, 1920 680, 1980 500"
+            stroke-width="2" />
+          <!-- Dhanushkodi spit into ocean -->
+          <path
+            d="M 1480 1120 C 1600 1100, 1750 1080, 1860 1050 C 1900 1040, 1910 1070, 1850 1090 C 1720 1130, 1580 1160, 1460 1165"
+            stroke-width="2" fill="currentColor" fill-opacity="0.04" />
+        </g>
+
+        <!-- Mountain Ranges / Western Ghats Contours -->
+        <g class="terrain-mountains" fill="none" stroke="currentColor" opacity="0.25" stroke-linecap="round">
+          <!-- Munnar / Anamalai Ridges -->
+          <path d="M 520 320 Q 640 280 750 340 T 920 380 T 1100 360" stroke-width="2" />
+          <path d="M 490 350 Q 620 310 740 370 T 900 410 T 1070 390" stroke-width="1.5" />
+          <path d="M 530 380 Q 660 340 780 400 T 940 440 T 1110 420" stroke-width="1" stroke-dasharray="6,4" />
+
+          <!-- Vagamon / Idukki Ridge Contours -->
+          <path d="M 560 540 Q 690 500 810 560 T 980 590 T 1140 570" stroke-width="1.8" />
+          <path d="M 530 570 Q 660 530 780 590 T 950 620 T 1110 600" stroke-width="1.4" />
+          <path d="M 570 600 Q 700 560 820 620 T 990 650 T 1150 630" stroke-width="1" stroke-dasharray="6,4" />
+
+          <!-- Agasthyamalai / Southern Ghats -->
+          <path d="M 680 820 Q 790 790 900 840 T 1060 860" stroke-width="1.6" />
+          <path d="M 650 850 Q 760 820 870 870 T 1030 890" stroke-width="1.2" stroke-dasharray="4,4" />
+        </g>
+
+        <!-- Route Lines (Connecting the Travel Spots) -->
+        <g class="map-trail-layer">
+          <path id="expeditionRoute" class="route-line-bg"
+            d="M 440 600 L 680 380 L 740 570 L 480 920 L 590 1140 L 1750 1070" fill="none" stroke="var(--accent)"
+            stroke-width="2.5" stroke-dasharray="6,6" opacity="0.8" />
+          <path class="route-line-glow" d="M 440 600 L 680 380 L 740 570 L 480 920 L 590 1140 L 1750 1070" fill="none"
+            stroke="var(--accent)" stroke-width="6" opacity="0.15" filter="url(#inkGlow)" />
+        </g>
+
+        <!-- Compass Rose -->
+        <g class="map-compass" transform="translate(160, 220)" opacity="0.4">
+          <circle cx="0" cy="0" r="42" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="3,3" />
+          <circle cx="0" cy="0" r="28" fill="none" stroke="currentColor" stroke-width="0.8" />
+          <path d="M 0 -38 L 5 -10 L 0 0 L -5 -10 Z" fill="var(--accent)" />
+          <path d="M 0 38 L 5 10 L 0 0 L -5 10 Z" fill="currentColor" opacity="0.4" />
+          <path d="M -38 0 L -10 -5 L 0 0 L -10 5 Z" fill="currentColor" opacity="0.4" />
+          <path d="M 38 0 L 10 -5 L 0 0 L 10 5 Z" fill="currentColor" opacity="0.4" />
+          <text x="0" y="-45" text-anchor="middle" font-family="var(--font-mono)" font-size="10" fill="var(--accent)"
+            font-weight="600">N</text>
+        </g>
+
+        <!-- Base (Kochi) -->
+        <g class="basecamp-marker" transform="translate(440, 600)">
+          <circle cx="0" cy="0" r="16" fill="none" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="3,3"
+            class="basecamp-pulse" />
+          <circle cx="0" cy="0" r="4.5" fill="var(--accent)" />
+          <text x="0" y="-12" text-anchor="middle" font-family="var(--font-mono)" font-size="10" font-weight="500"
+            fill="var(--fg)" letter-spacing="0.06em">Home / Kochi</text>
+        </g>
+      </svg>
+
+      <!-- Interactive Waypoint Markers Layer -->
+      <div class="map-waypoints-layer" id="waypointsLayer">
+
+        <!-- Spot 1: Munnar & Gap Road -->
+        <div class="waypoint-pin" style="left: 34%; top: 27.1%;" data-spot="munnar" data-category="highrange">
+          <div class="pin-pulse"></div>
+          <div class="pin-diamond">
+            <span class="pin-glyph">&#x25C6;</span>
+          </div>
+          <div class="pin-label">
+            <span class="pin-tag">Munnar</span>
+            <strong>Gap Road Ghats</strong>
+          </div>
+        </div>
+
+        <!-- Spot 2: Vagamon Pine Ridge -->
+        <div class="waypoint-pin" style="left: 37%; top: 40.7%;" data-spot="vagamon" data-category="highrange">
+          <div class="pin-pulse"></div>
+          <div class="pin-diamond">
+            <span class="pin-glyph">&#x25C6;</span>
+          </div>
+          <div class="pin-label">
+            <span class="pin-tag">Vagamon</span>
+            <strong>Pine Forest Camp</strong>
+          </div>
+        </div>
+
+        <!-- Spot 3: Varkala Cliffs -->
+        <div class="waypoint-pin" style="left: 24%; top: 65.7%;" data-spot="varkala" data-category="coastal">
+          <div class="pin-pulse"></div>
+          <div class="pin-diamond">
+            <span class="pin-glyph">&#x25C6;</span>
+          </div>
+          <div class="pin-label">
+            <span class="pin-tag">Varkala</span>
+            <strong>North Cliff Overlook</strong>
+          </div>
+        </div>
+
+        <!-- Spot 4: Kovalam & South Coast -->
+        <div class="waypoint-pin" style="left: 29.5%; top: 81.4%;" data-spot="kovalam" data-category="coastal">
+          <div class="pin-pulse"></div>
+          <div class="pin-diamond">
+            <span class="pin-glyph">&#x25C6;</span>
+          </div>
+          <div class="pin-label">
+            <span class="pin-tag">Kovalam</span>
+            <strong>Lighthouse Bends</strong>
+          </div>
+        </div>
+
+        <!-- Spot 5: Dhanushkodi -->
+        <div class="waypoint-pin" style="left: 87.5%; top: 76.4%;" data-spot="dhanushkodi" data-category="coastal">
+          <div class="pin-pulse"></div>
+          <div class="pin-diamond">
+            <span class="pin-glyph">&#x25C6;</span>
+          </div>
+          <div class="pin-label">
+            <span class="pin-tag">Tamil Nadu</span>
+            <strong>Dhanushkodi // Land's End</strong>
+          </div>
+        </div>
+
+      </div><!-- /.map-waypoints-layer -->
+
+    </div><!-- /.map-surface -->
+  </div><!-- /.map-viewport -->
+
+  <!-- Bottom Navigation & Controls -->
+  <footer class="map-hud-bottom">
+    <div class="hud-bottom-left">
+      <span class="wishlist-text">Next rides on the list: Kolli Hills, Silent Valley, Valparai</span>
+    </div>
+
+    <div class="hud-bottom-center">
+      <!-- Fast Select Waypoints Strip -->
+      <div class="waypoint-quickbar">
+        <button class="quickbar-btn" data-target="munnar">Munnar</button>
+        <button class="quickbar-btn" data-target="vagamon">Vagamon</button>
+        <button class="quickbar-btn" data-target="varkala">Varkala</button>
+        <button class="quickbar-btn" data-target="kovalam">Kovalam</button>
+        <button class="quickbar-btn" data-target="dhanushkodi">Dhanushkodi</button>
+      </div>
+    </div>
+
+    <div class="hud-bottom-right">
+      <div class="zoom-controls">
+        <button class="zoom-btn" id="btnZoomIn" aria-label="Zoom in">+</button>
+        <button class="zoom-btn" id="btnZoomOut" aria-label="Zoom out">&minus;</button>
+        <button class="zoom-btn reset-btn" id="btnZoomReset" aria-label="Recenter map"
+          title="Recenter map">&#x25CE;</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       Spot Trip Log Modal (with Photo Carousel & Personal Notes)
+       ========================================================================= -->
+  <div class="spot-modal-overlay" id="spotModalOverlay" aria-hidden="true">
+    <div class="spot-modal-card" id="spotModalCard" role="dialog" aria-modal="true">
+      <button class="spot-modal-close" id="spotModalClose" aria-label="Close notes">&times;</button>
+
+      <div class="spot-modal-header">
+        <div class="spot-modal-badge-row">
+          <span class="spot-meta-badge" id="modalTag">High range</span>
+          <span class="spot-meta-badge date" id="modalWhen">Monsoon ride</span>
+        </div>
+        <h2 class="spot-modal-title" id="modalTitle">Munnar Gap Road</h2>
+      </div>
+
+      <!-- Carousel Frame -->
+      <div class="spot-carousel-container">
+        <div class="spot-carousel-track" id="modalCarouselTrack">
+          <!-- Slides injected dynamically -->
+        </div>
+
+        <button class="spot-carousel-arrow prev" id="modalCarouselPrev" aria-label="Previous image">&lsaquo;</button>
+        <button class="spot-carousel-arrow next" id="modalCarouselNext" aria-label="Next image">&rsaquo;</button>
+
+        <div class="spot-carousel-dots" id="modalCarouselDots">
+          <!-- Dots injected dynamically -->
+        </div>
+      </div>
+
+      <!-- Natural Trip Log Content -->
+      <div class="spot-modal-body">
+        <div class="spot-story-wrap" id="modalStory">
+          <!-- Text injected dynamically -->
+        </div>
+
+        <div class="spot-footer-note" id="modalFootnote">
+          <!-- Context injected dynamically -->
+        </div>
+      </div>
+
+      <div class="spot-modal-footer">
+        <button class="btn-cta" id="modalDoneBtn">Back to map</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="journal-map.js"></script>
+</body>
+
+</html>

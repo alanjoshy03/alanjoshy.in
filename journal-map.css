@@ -1,0 +1,675 @@
+/* ==========================================================================
+   Expedition Map — Clean Cartographic & Trip Log Styles
+   ========================================================================== */
+
+.map-body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  user-select: none;
+  -webkit-user-select: none;
+  position: relative;
+}
+
+button {
+  font-family: inherit;
+}
+
+
+/* ---------------- Top Bar ---------------- */
+.map-hud-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 68px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.8rem;
+  background: color-mix(in srgb, var(--bg) 84%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--card-border);
+}
+
+.hud-left {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.hud-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--fg);
+  transition: all 0.3s var(--ease);
+}
+
+.hud-back-btn svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s var(--ease);
+}
+
+.hud-back-btn:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.hud-back-btn:hover svg {
+  transform: translateX(-3px);
+}
+
+.hud-title-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.hud-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.hud-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--fg);
+}
+
+/* Right */
+.hud-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.hud-filters {
+  display: flex;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  padding: 3px;
+  gap: 3px;
+}
+
+.hud-filter-btn {
+  background: transparent;
+  border: none;
+  color: var(--fg-dim);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  padding: 0.32rem 0.85rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+}
+
+.hud-filter-btn:hover {
+  color: var(--fg);
+}
+
+.hud-filter-btn.is-active {
+  background: var(--accent);
+  color: #fff;
+  font-weight: 500;
+}
+
+/* ---------------- Map Viewport & Surface ---------------- */
+.map-viewport {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+  background: var(--bg);
+}
+
+.map-viewport:active {
+  cursor: grabbing;
+}
+
+.map-surface {
+  position: absolute;
+  width: 2000px;
+  height: 1400px;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+.map-svg-terrain {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* ---------------- Trail Line & Animations ---------------- */
+.route-line-bg {
+  stroke-linecap: round;
+  animation: routeDash 35s linear infinite;
+}
+
+@keyframes routeDash {
+  to {
+    stroke-dashoffset: -400;
+  }
+}
+
+.basecamp-pulse {
+  animation: bcPulse 3s var(--ease) infinite;
+  transform-origin: center;
+}
+
+@keyframes bcPulse {
+  0% {
+    r: 10;
+    opacity: 0.8;
+  }
+
+  50% {
+    r: 22;
+    opacity: 0;
+  }
+
+  100% {
+    r: 10;
+    opacity: 0;
+  }
+}
+
+/* ---------------- Waypoint Pins ---------------- */
+.map-waypoints-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.waypoint-pin {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  z-index: 10;
+  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+}
+
+.waypoint-pin.is-hidden {
+  opacity: 0.15;
+  pointer-events: none;
+  filter: grayscale(1);
+}
+
+.pin-diamond {
+  width: 28px;
+  height: 28px;
+  background: var(--bg);
+  border: 1.5px solid var(--accent);
+  transform: rotate(45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s var(--ease);
+}
+
+.pin-glyph {
+  transform: rotate(-45deg);
+  font-size: 12px;
+  color: var(--accent);
+}
+
+.pin-pulse {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: 32px;
+  height: 32px;
+  border: 1.2px solid var(--accent);
+  border-radius: 5px;
+  animation: pinPulse 2.4s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+  pointer-events: none;
+}
+
+@keyframes pinPulse {
+  0% {
+    transform: translate(-50%, -50%) rotate(45deg) scale(0.8);
+    opacity: 0.9;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(45deg) scale(2.0);
+    opacity: 0;
+  }
+}
+
+.pin-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  border: 1px solid var(--card-border);
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  box-shadow: 0 4px 14px -3px rgba(0, 0, 0, 0.35);
+  white-space: nowrap;
+  transition: all 0.3s var(--ease);
+}
+
+.pin-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+.pin-label strong {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--fg);
+}
+
+.waypoint-pin:hover .pin-diamond {
+  transform: rotate(45deg) scale(1.2);
+  background: var(--accent);
+  border-color: #fff;
+}
+
+.waypoint-pin:hover .pin-glyph {
+  color: #fff;
+}
+
+.waypoint-pin:hover .pin-label {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* ---------------- Bottom Bar ---------------- */
+.map-hud-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 58px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.8rem;
+  background: color-mix(in srgb, var(--bg) 84%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--card-border);
+}
+
+.wishlist-text {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--fg-dim);
+  letter-spacing: 0.02em;
+}
+
+.waypoint-quickbar {
+  display: flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+  padding: 0.2rem 0;
+}
+
+.quickbar-btn {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--fg);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s var(--ease);
+}
+
+.quickbar-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.zoom-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--fg);
+  font-size: 1rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+}
+
+.zoom-btn:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.zoom-btn.reset-btn {
+  font-size: 0.9rem;
+}
+
+/* ---------------- Spot Modal & Carousel ---------------- */
+.spot-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(10, 10, 14, 0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s var(--ease);
+}
+
+.spot-modal-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.spot-modal-card {
+  position: relative;
+  background: var(--bg);
+  border: 1px solid var(--card-border);
+  border-radius: 24px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 2.2rem;
+  transform: translateY(20px) scale(0.98);
+  transition: transform 0.35s var(--ease);
+  box-shadow: 0 28px 60px -18px rgba(0, 0, 0, 0.55);
+}
+
+.spot-modal-overlay.is-open .spot-modal-card {
+  transform: translateY(0) scale(1);
+}
+
+.spot-modal-close {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  color: var(--fg);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s var(--ease);
+}
+
+.spot-modal-close:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.spot-modal-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.spot-meta-badge {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+.spot-meta-badge.date {
+  background: var(--card-bg);
+  border-color: var(--card-border);
+  color: var(--fg-dim);
+}
+
+.spot-modal-title {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 500;
+  margin: 0 0 1.2rem;
+  color: var(--fg);
+}
+
+/* Carousel */
+.spot-carousel-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--bg-2);
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 22px -8px rgba(0, 0, 0, 0.3);
+}
+
+.spot-carousel-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.4s var(--ease);
+}
+
+.carousel-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.carousel-slide-art {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.3rem;
+  color: #fff;
+  box-sizing: border-box;
+  background-size: cover;
+  background-position: center;
+}
+
+.slide-overlay-tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgba(18, 20, 26, 0.75);
+  backdrop-filter: blur(6px);
+  padding: 0.25rem 0.6rem;
+  border-radius: 5px;
+  display: inline-block;
+  align-self: flex-start;
+}
+
+.spot-carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(18, 20, 26, 0.6);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 1.3rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+  z-index: 5;
+}
+
+.spot-carousel-arrow:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.spot-carousel-arrow.prev {
+  left: 10px;
+}
+
+.spot-carousel-arrow.next {
+  right: 10px;
+}
+
+.spot-carousel-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 5;
+}
+
+.carousel-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+}
+
+.carousel-dot.is-active {
+  background: var(--accent);
+  width: 20px;
+  border-radius: 999px;
+}
+
+/* Story Text */
+.spot-story-wrap {
+  margin-bottom: 1.4rem;
+}
+
+.spot-story-p {
+  font-size: 1rem;
+  line-height: 1.68;
+  color: var(--fg-dim);
+  margin: 0 0 1rem;
+}
+
+.spot-story-p:last-child {
+  margin-bottom: 0;
+}
+
+.spot-footer-note {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--fg-dim);
+  padding: 0.8rem 1rem;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  margin-bottom: 1.4rem;
+}
+
+.spot-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1rem;
+  border-top: 1px solid var(--card-border);
+}
+
+/* ---------------- Responsive Adjustments ---------------- */
+@media (max-width: 900px) {
+  .map-hud-top {
+    height: auto;
+    padding: 0.7rem 1rem;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .hud-title {
+    font-size: 1.05rem;
+  }
+
+  .wishlist-text {
+    display: none;
+  }
+
+  .map-hud-bottom {
+    padding: 0.5rem 1rem;
+  }
+
+  .waypoint-quickbar {
+    max-width: 70vw;
+  }
+
+  .spot-modal-card {
+    padding: 1.5rem;
+    border-radius: 18px;
+  }
+}
