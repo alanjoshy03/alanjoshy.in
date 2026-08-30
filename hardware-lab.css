@@ -1,0 +1,578 @@
+/* ==========================================================================
+   Hardware Lab — Clean Minimalist 60/40 Showcase Styles
+   Matches original portfolio design tokens, typography, and warm aesthetics.
+   ========================================================================== */
+
+.hw-body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ---------------- Theme-Oriented Sleek Scrollbars ---------------- */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--fg) 15%, transparent);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--accent) 45%, transparent);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--fg) 15%, transparent) transparent;
+}
+
+/* ---------------- Top Bar (Matches journal-map.html) ---------------- */
+.hw-top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 68px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--card-border);
+}
+
+.hud-left {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.hud-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  padding: 0.45rem 0.95rem;
+  border-radius: 999px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--fg);
+  transition: all 0.3s var(--ease);
+  text-decoration: none;
+}
+
+.hud-back-btn svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s var(--ease);
+}
+
+.hud-back-btn:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.hud-back-btn:hover svg {
+  transform: translateX(-3px);
+}
+
+.hud-title-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.hud-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.hud-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--fg);
+}
+
+.hud-right {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+/* ---------------- Main Layout (65% Stage / 35% Description) ---------------- */
+.hw-viewport {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+  padding-top: 68px;
+  box-sizing: border-box;
+}
+
+/* ---------------- 65% Left / Center Visual Stage ---------------- */
+.hw-stage-container {
+  flex: 0 0 65%;
+  width: 65%;
+  height: calc(100vh - 68px);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+  padding-bottom: 75px;
+  overflow: hidden;
+}
+
+/* Subtle Warm Millimeter Grid */
+.hw-grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--fg) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--fg) 5%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at 50% 50%, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 30%, transparent 80%);
+  pointer-events: none;
+}
+
+/* Floating 3D Assembly */
+.hw-card-assembly {
+  position: relative;
+  width: 560px;
+  max-width: 88%;
+  transform-style: preserve-3d;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: cardFloat 5s ease-in-out infinite;
+  transition: transform 0.25s ease-out;
+  cursor: grab;
+}
+
+.hw-card-assembly:active {
+  cursor: grabbing;
+}
+
+@keyframes cardFloat {
+  0%, 100% {
+    transform: translateY(0) rotateX(2deg) rotateY(-2deg);
+  }
+  50% {
+    transform: translateY(-14px) rotateX(0.5deg) rotateY(2deg);
+  }
+}
+
+/* Physical Photo Display Card */
+.hw-photo-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow:
+    0 24px 60px -15px rgba(0, 0, 0, 0.25),
+    0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s var(--ease);
+}
+
+.hw-card-assembly:hover .hw-photo-card {
+  box-shadow:
+    0 32px 72px -16px rgba(0, 0, 0, 0.35),
+    0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.hw-main-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Floor Shadow Base */
+.hw-base-shadow {
+  position: absolute;
+  bottom: -45px;
+  width: 440px;
+  height: 35px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0.32) 0%, transparent 70%);
+  filter: blur(12px);
+  pointer-events: none;
+}
+
+/* ---------------- Minimal Dot Hotspots Layer ---------------- */
+.hw-hotspots-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.pin-node {
+  position: absolute;
+  pointer-events: auto;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+/* Small Minimal Initial Dot */
+.pin-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4), 0 0 12px color-mix(in srgb, var(--accent) 60%, transparent);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0;
+  font-weight: 700;
+  color: transparent;
+}
+
+.pin-pulse-ring {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--accent);
+  border-radius: 50%;
+  animation: pinRipple 2.2s infinite ease-out;
+  pointer-events: none;
+}
+
+@keyframes pinRipple {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* Expand & Pop Big on Hover */
+.pin-node:hover .pin-dot {
+  width: 26px;
+  height: 26px;
+  font-size: 0.72rem;
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+  transform: scale(1.15);
+}
+
+.pin-node:hover .pin-pulse-ring {
+  animation: none;
+  opacity: 0;
+}
+
+/* ---------------- Floating Tooltip Popover ---------------- */
+.hw-pin-popover {
+  position: fixed;
+  z-index: 200;
+  width: 240px;
+  background: var(--bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 0.85rem 1.1rem;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.22);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.hw-pin-popover.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.popover-title {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+  color: var(--fg);
+}
+
+.popover-desc {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--fg-dim);
+}
+
+/* ---------------- Bottom Selector Dock ---------------- */
+.hw-dock {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  background: color-mix(in srgb, var(--card-bg) 85%, var(--bg));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  padding: 0.35rem 0.45rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.hw-dock::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.dock-btn {
+  background: none;
+  border: none;
+  color: var(--fg-dim);
+  padding: 0.45rem 0.95rem;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  transition: all 0.25s var(--ease);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.dock-btn:hover {
+  color: var(--fg);
+  background: color-mix(in srgb, var(--fg) 5%, transparent);
+}
+
+.dock-btn.is-active {
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+
+.dock-num {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  opacity: 0.85;
+}
+
+/* ---------------- 35% Right-Side Dossier Panel ---------------- */
+.hw-dossier-panel {
+  flex: 0 0 35%;
+  width: 35%;
+  height: calc(100vh - 68px);
+  background: color-mix(in srgb, var(--card-bg) 80%, var(--bg));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-left: 1px solid var(--card-border);
+  overflow-y: auto;
+  box-sizing: border-box;
+  z-index: 20;
+}
+
+.dossier-scroll-content {
+  padding: 2.6rem 2.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.dossier-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Unboxed clean text eyebrow (No pill outline) */
+.dossier-tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.dossier-index {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--fg-dim);
+}
+
+.dossier-heading {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 500;
+  line-height: 1.2;
+  margin: 0;
+  color: var(--fg);
+}
+
+.dossier-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin: 0;
+}
+
+.dossier-body {
+  color: var(--fg-dim);
+  font-size: 0.94rem;
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* Bullet Highlights */
+.dossier-highlights {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dossier-highlights li {
+  color: var(--fg-dim);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.dossier-highlights li strong {
+  color: var(--fg);
+}
+
+/* Subtle, Elegant WhatsApp Button */
+.dossier-action-wrap {
+  margin-top: 0.4rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--card-border);
+}
+
+.btn-whatsapp-order {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  background: var(--fg);
+  color: var(--bg);
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 0.75rem 1.4rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  transition: all 0.25s var(--ease);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.btn-whatsapp-order svg {
+  color: #25D366;
+  width: 18px;
+  height: 18px;
+  transition: transform 0.25s var(--ease);
+}
+
+.btn-whatsapp-order:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+.btn-whatsapp-order:hover svg {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 1040px) {
+  .hw-viewport {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .hw-stage-container {
+    flex: none;
+    width: 100%;
+    min-height: 480px;
+    height: 55vh;
+    padding-bottom: 20px;
+  }
+  .hw-dossier-panel {
+    flex: none;
+    width: 100%;
+    height: auto;
+    border-left: none;
+    border-top: 1px solid var(--card-border);
+  }
+  .dossier-scroll-content {
+    padding: 2rem 1.6rem;
+  }
+  .hw-dock {
+    position: fixed;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 94%;
+    max-width: 500px;
+    overflow-x: auto;
+  }
+  .dock-btn {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
+}
