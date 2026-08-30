@@ -1,0 +1,848 @@
+/* ==========================================================================
+   Expedition Map (Ghost of Tsushima & Feudal Cartography inspired) Styles
+   ========================================================================== */
+
+.map-body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  user-select: none;
+  -webkit-user-select: none;
+  position: relative;
+}
+
+/* ---------------- HUD Top Bar ---------------- */
+.map-hud-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.8rem;
+  background: color-mix(in srgb, var(--bg) 84%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--card-border);
+  box-shadow: 0 8px 24px -8px rgba(0,0,0,0.3);
+}
+
+.hud-left {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+}
+
+.hud-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--fg);
+  transition: all 0.3s var(--ease);
+}
+
+.hud-back-btn svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s var(--ease);
+}
+
+.hud-back-btn:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.hud-back-btn:hover svg {
+  transform: translateX(-3px);
+}
+
+.hud-title-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.hud-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.hud-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+/* HUD Center */
+.hud-center {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.hud-stat-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: color-mix(in srgb, var(--card-bg) 60%, transparent);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 0.3rem 0.9rem;
+}
+
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  color: var(--fg-dim);
+  text-transform: uppercase;
+}
+
+.stat-value {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.accent-txt {
+  color: var(--accent);
+}
+
+/* HUD Right */
+.hud-right {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.hud-filters {
+  display: flex;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  padding: 3px;
+  gap: 3px;
+}
+
+.hud-filter-btn {
+  background: transparent;
+  border: none;
+  color: var(--fg-dim);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 0.32rem 0.75rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+}
+
+.hud-filter-btn:hover {
+  color: var(--fg);
+}
+
+.hud-filter-btn.is-active {
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 2px 8px -2px var(--accent);
+}
+
+/* ---------------- Map Viewport & Surface ---------------- */
+.map-viewport {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+  background: var(--bg);
+}
+
+.map-viewport:active {
+  cursor: grabbing;
+}
+
+.map-surface {
+  position: absolute;
+  width: 2000px;
+  height: 1400px;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+.map-svg-terrain {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* ---------------- Trail Line & Animations ---------------- */
+.route-line-bg {
+  stroke-linecap: round;
+  animation: routeDash 30s linear infinite;
+}
+
+@keyframes routeDash {
+  to { stroke-dashoffset: -400; }
+}
+
+.basecamp-pulse {
+  animation: bcPulse 3s var(--ease) infinite;
+  transform-origin: center;
+}
+
+@keyframes bcPulse {
+  0% { r: 12; opacity: 0.8; }
+  50% { r: 24; opacity: 0; }
+  100% { r: 12; opacity: 0; }
+}
+
+/* Guiding Wind Particles */
+.wind-particle {
+  animation: windDrift 8s cubic-bezier(.37,0,.63,1) infinite;
+}
+.wind-2 { animation-delay: 2.5s; }
+.wind-3 { animation-delay: 5s; }
+
+@keyframes windDrift {
+  0% { stroke-dashoffset: 600; opacity: 0; }
+  20% { opacity: 0.6; }
+  80% { opacity: 0.6; }
+  100% { stroke-dashoffset: -600; opacity: 0; }
+}
+
+/* ---------------- Waypoint Pins ---------------- */
+.map-waypoints-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.waypoint-pin {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  z-index: 10;
+  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+}
+
+.waypoint-pin.is-hidden {
+  opacity: 0.15;
+  pointer-events: none;
+  filter: grayscale(1);
+}
+
+.pin-diamond {
+  width: 32px;
+  height: 32px;
+  background: var(--bg);
+  border: 2px solid var(--accent);
+  transform: rotate(45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px -2px rgba(0,0,0,0.5), 0 0 10px 1px color-mix(in srgb, var(--accent) 40%, transparent);
+  transition: all 0.3s var(--ease);
+}
+
+.pin-glyph {
+  transform: rotate(-45deg);
+  font-size: 14px;
+  color: var(--accent);
+}
+
+.pin-pulse {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid var(--accent);
+  border-radius: 6px;
+  animation: pinPulse 2.4s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+  pointer-events: none;
+}
+
+@keyframes pinPulse {
+  0% { transform: translate(-50%, -50%) rotate(45deg) scale(0.8); opacity: 0.9; }
+  100% { transform: translate(-50%, -50%) rotate(45deg) scale(2.2); opacity: 0; }
+}
+
+.pin-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  border: 1px solid var(--card-border);
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  box-shadow: 0 6px 18px -4px rgba(0,0,0,0.4);
+  white-space: nowrap;
+  transition: all 0.3s var(--ease);
+}
+
+.pin-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+.pin-label strong {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.waypoint-pin:hover .pin-diamond {
+  transform: rotate(45deg) scale(1.2);
+  background: var(--accent);
+  border-color: #fff;
+}
+
+.waypoint-pin:hover .pin-glyph {
+  color: #fff;
+}
+
+.waypoint-pin:hover .pin-label {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+/* Locked Territory Markers */
+.waypoint-pin.is-locked .pin-lock-shield {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--bg-2) 90%, black 10%);
+  border: 2px dashed var(--warmgray);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--fg-dim);
+  box-shadow: 0 4px 12px -2px rgba(0,0,0,0.6);
+}
+
+.icon-lock {
+  width: 16px;
+  height: 16px;
+}
+
+.locked-label {
+  opacity: 0.8;
+  border-style: dashed;
+}
+
+.locked-tag {
+  color: var(--fg-dim);
+}
+
+/* Fog of War Shrouds */
+.fog-shroud {
+  position: absolute;
+  background: radial-gradient(circle, color-mix(in srgb, var(--ink) 90%, transparent) 0%, color-mix(in srgb, var(--ink) 60%, transparent) 55%, transparent 85%);
+  pointer-events: none;
+  filter: blur(28px);
+  mix-blend-mode: multiply;
+  opacity: 0.75;
+  animation: fogBreathe 8s ease-in-out infinite alternate;
+}
+
+html[data-theme="light"] .fog-shroud {
+  background: radial-gradient(circle, color-mix(in srgb, var(--paper-2) 95%, transparent) 0%, color-mix(in srgb, var(--paper-2) 75%, transparent) 55%, transparent 85%);
+  mix-blend-mode: normal;
+}
+
+@keyframes fogBreathe {
+  0% { transform: scale(0.96) translate(-10px, -5px); opacity: 0.65; }
+  100% { transform: scale(1.04) translate(10px, 5px); opacity: 0.85; }
+}
+
+/* ---------------- HUD Bottom Bar ---------------- */
+.map-hud-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.8rem;
+  background: color-mix(in srgb, var(--bg) 84%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--card-border);
+}
+
+.hud-instruction {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--fg-dim);
+  letter-spacing: 0.04em;
+}
+
+.instruction-key {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.waypoint-quickbar {
+  display: flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+  padding: 0.2rem 0;
+}
+
+.quickbar-btn {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--fg);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s var(--ease);
+}
+
+.quickbar-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.zoom-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--fg);
+  font-size: 1.1rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+}
+
+.zoom-btn:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.zoom-btn.reset-btn {
+  font-size: 0.95rem;
+}
+
+/* ---------------- Spot Modal & Carousel ---------------- */
+.spot-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(10, 10, 14, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s var(--ease);
+}
+
+.spot-modal-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.spot-modal-card {
+  position: relative;
+  background: var(--bg);
+  border: 1px solid var(--card-border);
+  border-radius: 28px;
+  max-width: 680px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 2.2rem;
+  transform: translateY(24px) scale(0.97);
+  transition: transform 0.35s var(--ease);
+  box-shadow: 0 32px 70px -20px rgba(0,0,0,0.65);
+}
+
+.spot-modal-overlay.is-open .spot-modal-card {
+  transform: translateY(0) scale(1);
+}
+
+.spot-modal-close {
+  position: absolute;
+  top: 1.4rem;
+  right: 1.4rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  color: var(--fg);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s var(--ease);
+}
+
+.spot-modal-close:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.spot-modal-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.spot-meta-badge {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+.spot-meta-badge.mono {
+  background: var(--card-bg);
+  border-color: var(--card-border);
+  color: var(--fg-dim);
+}
+
+.spot-meta-badge.altitude {
+  background: color-mix(in srgb, var(--backwater) 20%, transparent);
+  border-color: var(--backwater);
+  color: var(--fg);
+}
+
+.spot-modal-title {
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  font-weight: 500;
+  margin: 0 0 0.3rem;
+}
+
+.spot-modal-subtitle {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--fg-dim);
+  display: block;
+  margin-bottom: 1.4rem;
+}
+
+/* Carousel */
+.spot-carousel-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--bg-2);
+  margin-bottom: 1.6rem;
+  box-shadow: 0 12px 28px -10px rgba(0,0,0,0.4);
+}
+
+.spot-carousel-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.4s var(--ease);
+}
+
+.carousel-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-slide-art {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem;
+  color: #fff;
+  box-sizing: border-box;
+  background-size: cover;
+  background-position: center;
+}
+
+.slide-overlay-tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: rgba(18, 20, 26, 0.75);
+  backdrop-filter: blur(8px);
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  display: inline-block;
+  align-self: flex-start;
+}
+
+.spot-carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(18, 20, 26, 0.65);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+  font-size: 1.4rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+  z-index: 5;
+}
+
+.spot-carousel-arrow:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.spot-carousel-arrow.prev { left: 12px; }
+.spot-carousel-arrow.next { right: 12px; }
+
+.spot-carousel-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 5;
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.45);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+}
+
+.carousel-dot.is-active {
+  background: var(--accent);
+  width: 22px;
+  border-radius: 999px;
+}
+
+/* Logbook Text */
+.spot-logbook-section {
+  margin-bottom: 1.6rem;
+}
+
+.logbook-tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.spot-story-text {
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: var(--fg-dim);
+  margin: 0;
+}
+
+/* Specs Grid */
+.spot-specs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.9rem;
+  margin-bottom: 1.8rem;
+}
+
+.spec-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 0.9rem 1.1rem;
+}
+
+.spec-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: var(--fg-dim);
+  margin-bottom: 0.25rem;
+}
+
+.spec-card strong {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--fg);
+}
+
+.spot-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--card-border);
+}
+
+.dossier-id {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--fg-dim);
+  letter-spacing: 0.08em;
+}
+
+/* ---------------- Locked Territory Popover ---------------- */
+.locked-toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--bg);
+  border: 1px dashed var(--accent);
+  border-radius: 16px;
+  padding: 0.9rem 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 20px 40px -10px rgba(0,0,0,0.6);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s var(--ease);
+  z-index: 150;
+  max-width: 90vw;
+  width: 380px;
+}
+
+.locked-toast.is-shown {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+.locked-toast-icon {
+  font-size: 1.5rem;
+}
+
+.locked-toast-body strong {
+  display: block;
+  font-size: 0.92rem;
+  color: var(--fg);
+}
+
+.locked-toast-body p {
+  margin: 0.2rem 0 0;
+  font-size: 0.8rem;
+  color: var(--fg-dim);
+}
+
+/* ---------------- Responsive Adjustments ---------------- */
+@media (max-width: 900px) {
+  .map-hud-top {
+    height: auto;
+    padding: 0.7rem 1rem;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .hud-center {
+    display: none;
+  }
+  .hud-title {
+    font-size: 1.05rem;
+  }
+  .hud-instruction {
+    display: none;
+  }
+  .map-hud-bottom {
+    padding: 0.5rem 1rem;
+  }
+  .waypoint-quickbar {
+    max-width: 60vw;
+  }
+  .spot-modal-card {
+    padding: 1.5rem;
+    border-radius: 20px;
+  }
+  .spot-specs-grid {
+    grid-template-columns: 1fr;
+  }
+}
