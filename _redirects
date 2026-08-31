@@ -1,0 +1,6 @@
+# Clean URL rewrites & redirects for Netlify
+/hardware-lab    /hardware-lab.html    200
+/journal-map     /journal-map.html     200
+/for-my-people   /perks.html   200
+/perks           /perks.html   200
+

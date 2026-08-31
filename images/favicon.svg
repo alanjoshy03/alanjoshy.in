@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="16" fill="#12141A" />
+  <text x="24" y="45" font-family="-apple-system, BlinkMacSystemFont, 'Instrument Sans', 'Fraunces', sans-serif" font-size="34" font-weight="700" fill="#EDE6D6">A</text>
+  <circle cx="45" cy="42" r="4.5" fill="#D95C30" />
+</svg>
