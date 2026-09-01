@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="16" fill="#1C1815" />
-  <!-- Circuit microchip emblem -->
-  <rect x="20" y="20" width="24" height="24" rx="4" fill="#29231E" stroke="#D95C30" stroke-width="2.5" />
-  <circle cx="26" cy="26" r="2" fill="#D95C30" />
-  <!-- Pins -->
-  <path d="M26 13v7 M38 13v7 M26 44v7 M38 44v7 M13 26h7 M13 38h7 M44 26h7 M44 38h7" stroke="#D95C30" stroke-width="2.5" stroke-linecap="round" />
-</svg>

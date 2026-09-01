@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="16" fill="#12141A" />
-  <!-- Minimalist GPS / Map Waypoint Emblem -->
-  <circle cx="32" cy="27" r="11" fill="none" stroke="#D95C30" stroke-width="3" />
-  <circle cx="32" cy="27" r="4.5" fill="#D95C30" />
-  <path d="M32 38 L32 50" stroke="#D95C30" stroke-width="3" stroke-linecap="round" />
-</svg>
