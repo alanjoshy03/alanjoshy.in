@@ -21,6 +21,12 @@
   --ease: cubic-bezier(.22, .68, .24, 1);
 }
 
+/* Note: The percentage-to-section stops in --page-bg-gradient and --page-bg-fallback
+   (Hero ~0-14%, Work ~15-38%, Lab ~38-55%, Journal ~55-75%, About ~75-85%, Connect/Footer ~85-100%)
+   are approximate mappings as of this implementation. As new journal entries, rides, or hardware builds
+   are added over time, section heights may shift; the continuous gradient will remain seamless and seam-free,
+   but these stops can be retuned if page content length expands significantly. */
+
 html[data-theme="dark"] {
   --bg: var(--ink);
   --bg-2: var(--ink-2);
@@ -32,6 +38,8 @@ html[data-theme="dark"] {
   --card-border: rgba(255, 255, 255, 0.08);
   --hero-glow-1: radial-gradient(circle at 20% 25%, rgba(181, 101, 44, 0.24), transparent 55%);
   --hero-glow-2: radial-gradient(circle at 82% 70%, rgba(61, 92, 72, 0.30), transparent 55%);
+  --page-bg-fallback: linear-gradient(180deg, #12141A 0%, #12141A 14%, #181C26 26%, #1B1E27 38%, #161F1C 50%, #1D1E24 66%, #151820 80%, #1C1E26 92%, #12141A 100%);
+  --page-bg-gradient: linear-gradient(180deg, var(--ink) 0%, var(--ink) 14%, color-mix(in srgb, var(--backwater) 12%, var(--ink-2)) 26%, var(--ink-2) 38%, color-mix(in srgb, var(--backwater) 14%, var(--ink)) 50%, color-mix(in srgb, var(--rust) 10%, var(--ink)) 66%, var(--ink) 80%, color-mix(in srgb, var(--rust) 12%, var(--ink-2)) 92%, var(--ink) 100%);
 }
 
 html[data-theme="light"] {
@@ -45,6 +53,8 @@ html[data-theme="light"] {
   --card-border: rgba(18, 20, 26, 0.09);
   --hero-glow-1: radial-gradient(circle at 18% 20%, rgba(181, 101, 44, 0.16), transparent 55%);
   --hero-glow-2: radial-gradient(circle at 85% 75%, rgba(61, 92, 72, 0.18), transparent 55%);
+  --page-bg-fallback: linear-gradient(180deg, #EDE6D6 0%, #EDE6D6 14%, #E3DEC8 26%, #E4DBC7 38%, #DFE2D4 50%, #ECE3D7 66%, #EDE6D6 80%, #E6DDD0 92%, #EDE6D6 100%);
+  --page-bg-gradient: linear-gradient(180deg, var(--paper) 0%, var(--paper) 14%, color-mix(in srgb, var(--backwater) 8%, var(--paper-2)) 26%, var(--paper-2) 38%, color-mix(in srgb, var(--backwater) 9%, var(--paper)) 50%, color-mix(in srgb, var(--rust) 8%, var(--paper)) 66%, var(--paper) 80%, color-mix(in srgb, var(--rust) 9%, var(--paper-2)) 92%, var(--paper) 100%);
 }
 
 * {
@@ -84,7 +94,9 @@ html {
 
 body {
   margin: 0;
-  background: var(--bg);
+  background: var(--bg); /* solid base fallback */
+  background: var(--page-bg-fallback); /* gradient fallback for browsers without color-mix support */
+  background: var(--page-bg-gradient); /* continuous full-document background gradient */
   color: var(--fg);
   font-family: var(--font-body);
   font-size: 16px;
@@ -704,18 +716,6 @@ html[data-theme="dark"] .icon-moon {
 
 .work-section {
   position: relative;
-  background: linear-gradient(180deg, transparent, var(--bg-2) 12%, var(--bg-2) 88%, transparent);
-}
-
-.work-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 8% 15%, color-mix(in srgb, var(--backwater) 20%, transparent), transparent 45%),
-    radial-gradient(circle at 92% 85%, color-mix(in srgb, var(--rust) 16%, transparent), transparent 50%);
 }
 
 .work-section .section-inner {
@@ -829,15 +829,6 @@ html[data-theme="dark"] .icon-moon {
 /* ---- Hardware Lab ---- */
 .lab-section {
   position: relative;
-}
-
-.lab-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background: radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--backwater) 14%, transparent), transparent 60%);
 }
 
 .lab-section .section-inner {
@@ -1266,17 +1257,6 @@ html[data-theme="dark"] .icon-moon {
   position: relative;
 }
 
-.connect-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 12% 80%, color-mix(in srgb, var(--rust) 16%, transparent), transparent 50%),
-    radial-gradient(circle at 88% 15%, color-mix(in srgb, var(--backwater) 16%, transparent), transparent 50%);
-}
-
 .connect-section .section-inner {
   position: relative;
   z-index: 1;
@@ -1655,7 +1635,6 @@ html[data-theme="dark"] .custom-select-menu {
 .site-footer {
   border-top: 1px solid var(--card-border);
   padding: 4rem 2rem 5rem;
-  background: var(--bg);
   position: relative;
   z-index: 10;
 }

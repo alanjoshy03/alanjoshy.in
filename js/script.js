@@ -337,7 +337,7 @@ function initJournalCarousel() {
     const card = e.target.closest('.journal-card');
     if (card) {
       const spot = card.getAttribute('data-spot') || 'munnar';
-      window.location.href = `journal-map.html?spot=${spot}`;
+      window.location.href = `journal-map?spot=${spot}`;
     }
   });
 
@@ -535,7 +535,7 @@ function initXPulseRideLauncher() {
     isLaunching = true;
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      window.location.href = 'journal-map.html';
+      window.location.href = 'journal-map';
       return;
     }
 
@@ -551,7 +551,7 @@ function initXPulseRideLauncher() {
 
     // Step 3: Transition to the map page as smoke covers screen
     setTimeout(() => {
-      window.location.href = 'journal-map.html';
+      window.location.href = 'journal-map';
     }, 1150);
   }
 

@@ -1,7 +1,38 @@
 [build]
   publish = "."
 
-# Clean URL routing
+# Force 301 redirect from .html to clean URLs
+[[redirects]]
+  from = "/hardware-lab.html"
+  to = "/hardware-lab"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/journal-map.html"
+  to = "/journal-map"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/perks.html"
+  to = "/perks"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/for-my-people.html"
+  to = "/perks"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+  force = true
+
+# Clean URL routing (200 rewrites)
 [[redirects]]
   from = "/hardware-lab"
   to = "/hardware-lab.html"
@@ -14,12 +45,12 @@
 
 [[redirects]]
   from = "/for-my-people"
-  to = "/for-my-people.html"
+  to = "/perks.html"
   status = 200
 
 [[redirects]]
   from = "/perks"
-  to = "/for-my-people.html"
+  to = "/perks.html"
   status = 200
 
 # Cache-Control headers for static assets
@@ -42,4 +73,3 @@
   for = "/*.html"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
-
