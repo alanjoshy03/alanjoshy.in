@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMapNavigation();
   initWaypoints();
   initModalCarousel();
+  initPhotoLightbox();
   initFilters();
 
   // Auto-focus and open spot log if passed in URL query param: journal-map.html?spot=chimmini
@@ -44,182 +45,276 @@ function initTheme() {
 
 /* ---------------- Genuine Trip Notes Data ---------------- */
 const WAYPOINT_DATA = {
-  chimmini: {
-    title: "Chimmini Wildlife Sanctuary",
-    tag: "Forest reserve",
-    when: "Quiet weekend run",
-    paragraphs: [
-      "A completely different pace from the aggressive high-range climbs. Took the narrow forest department road branching in from Thrissur — tree canopy so thick overhead that the afternoon sunlight only breaks through in golden patches across the road.",
-      "Rode slow along the reservoir edge with zero engine noise, just the sound of cicadas and water lapping against the gravel banks. We stopped on the dam bridge to watch hornbills crossing between the bamboo thickets. A good reminder that not every ride needs to be about distance or speed."
-    ],
-    footnote: "Slow forest run • Dam reservoir and quiet canopy trails",
-    slides: [
-      {
-        tag: "RESERVOIR ROAD",
-        gradient: "linear-gradient(135deg, rgba(61,92,72,0.9), rgba(27,30,39,0.95))",
-        caption: "Silent water and dense rainforest buffer on the sanctuary track."
-      },
-      {
-        tag: "CANOPY TRAIL",
-        gradient: "linear-gradient(135deg, rgba(181,101,44,0.75), rgba(61,92,72,0.85))",
-        caption: "Shaded gravel road cutting through the foothills buffer zone."
-      }
-    ]
-  },
-
   chokramudi: {
-    title: "Chokramudi Trek",
-    tag: "High range trek",
-    when: "Winter weekend",
+    title: "Chokramudi Peak (Trekking)",
+    tag: "Trek",
+    when: "February 2026",
     paragraphs: [
-      "A steep climb near Munnar — short in horizontal distance, but totally unforgiving in gradient. We parked the Xpulses by the roadside tea shop early in the morning and started scrambling up the rocky spine before the fog lifted.",
-      "The wind near the false peak was strong enough that you had to lean your whole body into it. By the time we scrambled past the last boulders to the summit ridge, the entire valley below was laid out like a green contour map. The kind of climb where the view makes you forgive your knees for the descent."
+      "Chokramudi doesn't do gentle inclines — it's steep from the first step and stays that way, which is either character-building or just cruel, depending on how your knees are feeling that day.",
+      "Rode up with three friends the evening before, grabbed a stay nearby, and started the climb early — smart move, since by mid-climb the sun was doing its best to end us. Multiple terrain changes on the way up (rock, grass, more rock) kept things interesting in a way that mostly meant \"don't look down.\" Slow and steady actually works here — anyone who sprints the first stretch regrets it by the second. The summit view, though, genuinely earns the suffering: Kolukkumalai, Meesapulimala, and Anamudi all visible from up top, which is the kind of payoff that makes you forget your legs are filing a complaint."
     ],
-    footnote: "Early morning push • Steeper than it looks from the road",
+    footnote: "Steep enough to question your fitness, worth it for the summit view",
     slides: [
       {
-        tag: "ROCKY SPINE",
-        gradient: "linear-gradient(135deg, rgba(181,101,44,0.85), rgba(61,92,72,0.8))",
-        caption: "Scrambling up the grassy ridge before the mid-day sun."
+        tag: "Summit view",
+        image: "images/journal/chokramudi/ch3.webp",
+        caption: "Kolukkumalai, Meesapulimala, and Anamudi, all from one spot."
       },
       {
-        tag: "TEA VALLEY RIDGE",
-        gradient: "linear-gradient(135deg, rgba(61,92,72,0.85), rgba(18,20,26,0.95))",
-        caption: "Looking down onto the Lockhart and Bison Valley slopes."
+        tag: "The climb",
+        image: "images/journal/chokramudi/ch1.webp",
+        caption: "One of the steeper stretches on the way up."
+      },
+      {
+        tag: "Almost there",
+        image: "images/journal/chokramudi/ch2.webp",
+        caption: "Terrain shifting again near the top."
+      },
+      {
+        tag: "Rhododendron, uninvited but photogenic",
+        image: "images/journal/chokramudi/ch4.webp",
+        caption: "A wild rhododendron that insisted on being photographed."
       }
     ]
   },
 
-  meesapulimala: {
-    title: "Meesapulimala Peak",
-    tag: "Peak trek",
-    when: "October last year",
-    paragraphs: [
-      "The main trip of last year — myself and the same three friends who come along for most of these. Left the bikes at the base camp near Suryanelli before daybreak, then hiked up through the rhododendron valleys as the clouds were still sitting in the hollows.",
-      "Meesapulimala is one of the highest points in the Western Ghats, and the steep ridge climb is long enough that everyone stops talking for stretches of it. Standing at the peak with Tamil Nadu on one side and Kerala on the other, watching the wind push mist across the cliffs — you forget how cold your hands are."
-    ],
-    footnote: "Trek with the core four • Camped below Suryanelli",
-    slides: [
-      {
-        tag: "RHODO VALLEY",
-        gradient: "linear-gradient(135deg, rgba(61,92,72,0.95), rgba(181,101,44,0.75))",
-        caption: "Walking through the high-altitude grasslands before sunrise."
-      },
-      {
-        tag: "THE SUMMIT RIDGE",
-        gradient: "linear-gradient(135deg, rgba(18,20,26,0.95), rgba(61,92,72,0.85))",
-        caption: "Windy cliff edge looking out across the sea of clouds."
-      }
-    ]
-  },
-
-  munnar: {
+  "gap-road": {
     title: "Munnar & Gap Road",
     tag: "High range",
-    when: "Early monsoon, 2024",
+    when: "Last visited June 2026",
     paragraphs: [
-      "Left Kochi around 4:30 AM before the highway traffic woke up. By the time we hit the ghat section past Kothamangalam, the temperature had dropped ten degrees and Gap Road was half fog, half wet gravel from the night's drizzle.",
-      "We stopped at a tiny wooden tea shack near Devikulam that probably hasn't changed in thirty years — lukewarm parottas, very strong tea, and our riding jackets dripping all over the floor. The rear tyre slipped once on wet moss near Lockhart gap, but the Xpulse just straightened out and tracked through. Cold, soaked, completely worth the numb fingers."
+      "Munnar's tea plantations have a way of making you forget you have a job, and Gap Road specifically seems designed to slow your brain down whether you want it to or not.",
+      "Been here before on two wheels, this time by car — different pace, same effect. Mornings here are properly foggy and properly cold, the kind of cold that makes a plate of hot noodles from a roadside Gap Road stall feel like a genuine life event. The tea plantations do most of the emotional work here; there's something about all that green stretching into fog that resets whatever mental clutter you rode in with."
     ],
-    footnote: "Rode with: Jithin, Rahul & Sharon • 2 days, 1 puncture near Adimali",
+    footnote: "Rode with friends · Also arrived once by car, which doesn't count as cheating",
     slides: [
       {
-        tag: "GAP ROAD",
-        gradient: "linear-gradient(135deg, rgba(61,92,72,0.85), rgba(18,20,26,0.95))",
-        caption: "Fog rolling over the new road cut before the morning buses started."
+        tag: "Tea and fog",
+        image: "images/journal/munnar/mg1.webp",
+        caption: "Gap Road's plantations, mid-morning haze."
       },
       {
-        tag: "LOCKHART GAP",
-        gradient: "linear-gradient(135deg, rgba(181,101,44,0.75), rgba(61,92,72,0.85))",
-        caption: "Quick breather to clean visors and let the engines cool down."
+        tag: "Cold enough for noodles",
+        image: "images/journal/munnar/mg2.webp",
+        caption: "The roadside stop that saved the morning."
+      },
+      {
+        tag: "More tea, more fog",
+        image: "images/journal/munnar/mg3.webp",
+        caption: "Because one photo of this view was never enough."
+      },
+      {
+        tag: "Two bikes, one stop",
+        image: "images/journal/munnar/mg4.webp",
+        caption: "Parked up with a friend, previous visit."
       }
     ]
   },
 
-
-  vagamon: {
-    title: "Vagamon Pine Forest",
-    tag: "Camping",
-    when: "Winter weekend",
+  inchathotti: {
+    title: "Mamalakandam & Inchathotti Hanging Bridge",
+    tag: "Solo ride",
+    when: "December 2023",
     paragraphs: [
-      "No phone signal after Kolahalamedu, which was the entire point of going. Four of us, two small tents, and a cheap portable camping stove that took twenty minutes to boil enough water for four cups of black tea.",
-      "The last two kilometers were all loose mud and wet pine needles where you basically paddle with your feet. Woke up at 6 AM to cows grazing right outside the tent flap and mist so thick you couldn't see the bikes parked ten feet away."
+      "Mamalakandam is deep-forest Kerala at its most theatrical — thick tree cover, mist that doesn't burn off until well past sunrise, and a silence that makes every twig-snap sound personal.",
+      "Left home before the sun did, which in hindsight was either brave or deeply questionable — riding solo through a pitch-dark forest road with nothing but a headlight and my own imagination working overtime is not for the faint of heart. Every shadow was definitely a wild elephant. It wasn't. Reached the hanging bridge just as the fog was lifting, and the view made the mild cardiac event on the way in completely worth it. Parked the bike on top of an off-road hill afterward just to sit there a while — no plan, no rush, just forest silence and the smug satisfaction of having survived my own nerves."
     ],
-    footnote: "Two tents, zero cellular bars, back home by Sunday evening.",
+    footnote: "Solo run · No one to blame for getting spooked but myself",
     slides: [
       {
-        tag: "PINE VALLEY",
-        gradient: "linear-gradient(135deg, rgba(61,92,72,0.9), rgba(27,30,39,0.95))",
-        caption: "Pitching camp just before the light disappeared behind the hill."
+        tag: "Suspension bridge, post-fog",
+        image: "images/journal/inchathotti/mm1.webp",
+        caption: "The hanging bridge, right as the mist finally cleared."
       },
       {
-        tag: "THE MORNING MIST",
-        gradient: "linear-gradient(135deg, rgba(181,101,44,0.8), rgba(27,30,39,0.9))",
-        caption: "Bikes covered in morning condensation before heading out."
+        tag: "Parked with a view",
+        image: "images/journal/inchathotti/mm2.webp",
+        caption: "Bike parked on the off-road hilltop, mid-ride pause."
+      },
+      {
+        tag: "Forest, pre-dawn",
+        image: "images/journal/inchathotti/mm3.webp",
+        caption: "Mamalakandam's tree line before sunrise properly arrived."
+      },
+      {
+        tag: "Still forest, still spooky",
+        image: "images/journal/inchathotti/mm4.webp",
+        caption: "Same forest, slightly less spooky in daylight."
+      }
+    ]
+  },
+
+  meeshapulimala: {
+    title: "Meeshapulimala",
+    tag: "Peak trek",
+    when: "December 31, 2025",
+    paragraphs: [
+      "Meesapulimala is the kind of place that makes \"second highest peak in South India\" feel like an understatement — it's less a destination and more a separate atmosphere entirely.",
+      "Went with three friends, stayed at a KDFC-run mansion the night before — clean rooms, decent food, and a genuinely good night's sleep before what turned out to be a long trek the next day. The Shola grasslands up here are also home to the Nilgiri tahr, a stocky, sure-footed mountain goat found almost nowhere else on Earth outside these high-altitude grasslands — spotting one mid-trek felt like the mountain personally approving of the effort. Ringing in the new year at that altitude, with that view, is hard to describe without sounding like a greeting card — so I won't try too hard. Magical is overused. It still applies here."
+    ],
+    footnote: "Rode in with 3 friends · Stayed at the KDFC mansion, New Year's trek",
+    slides: [
+      {
+        tag: "Grasslands, endless",
+        image: "images/journal/meesapulimala/mp1.webp",
+        caption: "Shola grassland stretching toward the horizon."
+      },
+      {
+        tag: "The long trek",
+        image: "images/journal/meesapulimala/mp2.webp",
+        caption: "Somewhere in the middle of a genuinely long climb."
+      },
+      {
+        tag: "Nilgiri tahr, unbothered",
+        image: "images/journal/meesapulimala/mp3.webp",
+        caption: "One of the mountain's resident tahr, mid-graze."
+      },
+      {
+        tag: "New Year, new altitude",
+        image: "images/journal/meesapulimala/mp4.webp",
+        caption: "The view that made the whole trek worth it."
+      }
+    ]
+  },
+
+  panchalimedu: {
+    title: "Panchalimedu",
+    tag: "Viewpoint",
+    when: "January 2026",
+    paragraphs: [
+      "Panchalimedu is one of those stops that sneaks up on you — you're technically just passing through en route to Vagamon, and then suddenly you're standing at a viewpoint with genuine mythological weight behind it.",
+      "The place is tied to Mahabharata legend — locals will tell you it's linked to the Pandavas' exile, which adds a strange gravity to what is otherwise just a really good spot for photos. Calm, quiet, and criminally photogenic — the kind of stop that turns a five-minute break into a twenty-minute photoshoot without anyone planning it that way."
+    ],
+    footnote: "Rode with friends · Quick stop that turned into the highlight of the ride",
+    slides: [
+      {
+        tag: "The viewpoint",
+        image: "images/journal/panchalimedu/pm1.webp",
+        caption: "Panchalimedu's main lookout, mid-afternoon light."
+      },
+      {
+        tag: "Heritage ground",
+        image: "images/journal/panchalimedu/pm2.webp",
+        caption: "The spot tied to local Mahabharata legend."
+      },
+      {
+        tag: "Just passing through",
+        image: "images/journal/panchalimedu/pm3.webp",
+        caption: "Which is how every good detour starts."
+      },
+      {
+        tag: "More viewpoint",
+        image: "images/journal/panchalimedu/pm4.webp",
+        caption: "Because one photo wasn't enough."
+      },
+      {
+        tag: "Golden hour, unplanned",
+        image: "images/journal/panchalimedu/pm5.webp",
+        caption: "The light that turned a stop into a shoot."
+      }
+    ]
+  },
+
+  vagamon: {
+    title: "Vagamon & Camping",
+    tag: "Camping",
+    when: "Monthly-ish, ongoing",
+    paragraphs: [
+      "Vagamon has become the default answer whenever the three of us need to disappear for a weekend — pine forests, rolling meadows, and just enough remoteness to feel like an actual escape without needing an entire week off.",
+      "This has turned into something close to a monthly ritual, which still makes us laugh a little — \"we're doing this again?\" followed by immediately packing raw vegetables and instant noodles into a bag anyway. Bike if the budget allows, car if it doesn't; either way we're usually rolling in Saturday evening, cooking over a fire at our tent site on the mountain, and waking up to Sunday morning fog before heading back that evening. This round also took us through Ilaveezhapunchira — a crater-like valley locals call the \"meadow that never floods,\" oddly beautiful in an eerie sort of way — and Illikal Kallu, a massive rock formation with a genuinely vertigo-inducing viewpoint at the top. One word of warning that never gets old: leeches. Vagamon's undergrowth does not care about your ankles."
+    ],
+    footnote: "Rode/drove with the usual 3 · Saturday to Sunday, cooked on-site, leech count: undisclosed",
+    slides: [
+      {
+        tag: "The tent, pre-chaos",
+        image: "images/journal/vagamon/vg1.webp",
+        caption: "Set up before the cooking fire took over."
+      },
+      {
+        tag: "Cooking on the mountain",
+        image: "images/journal/vagamon/vg2.webp",
+        caption: "Instant noodles have never tasted better."
+      },
+      {
+        tag: "Fog, morning after",
+        image: "images/journal/vagamon/vg3.webp",
+        caption: "Sunday morning at the campsite."
+      },
+      {
+        tag: "Ilaveezhapunchira",
+        image: "images/journal/vagamon/vg4.webp",
+        caption: "The valley that supposedly never floods."
+      },
+      {
+        tag: "Illikal Kallu, from the top",
+        image: "images/journal/vagamon/vg5.webp",
+        caption: "The viewpoint that tests your fear of heights."
       }
     ]
   },
 
   varkala: {
-    title: "Varkala Cliffside",
+    title: "Varkala",
     tag: "Coast",
-    when: "Saturday afternoon run",
+    when: "June 2025",
     paragraphs: [
-      "Just an easy afternoon blast down the coastal highway to catch the sunset from the cliff edge. Parked near the helipad, sat on the red dirt with fresh lime sodas, and watched paragliders floating over the waves until dark.",
-      "Rode back late through the narrow coastal backroads under the coconut palms — cool sea air the entire way home."
+      "Varkala's whole identity is \"cliffside beach town that refuses to take itself too seriously\" — dramatic red cliffs dropping straight into the Arabian Sea, and a nightlife scene that's earned it the \"mini Goa\" label fair and square.",
+      "Took the train down with family this time, which meant actual scenery instead of watching the road — the stretch through Kottayam is solid green the entire way, easily one of the better train rides in the state. Booked a room for two nights on a weekday specifically to dodge the weekend crowd, and it worked — clean beach, quiet cliffs, and just enough nightlife buzz in the evenings to remind you you're still on a holiday, not a retreat. A proper change of pace from the usual routine — pure beach-brain for 48 hours."
     ],
-    footnote: "Casual 1-day run • Best lemon soda on the cliff",
+    footnote: "Went with family · Two nights, weekday, zero regrets",
     slides: [
       {
-        tag: "NORTH CLIFF",
-        gradient: "linear-gradient(135deg, rgba(217,130,74,0.85), rgba(61,92,72,0.75))",
-        caption: "Red laterite cliffs looking out over the evening surf."
+        tag: "The cliffs",
+        image: "images/journal/varkala/vk1.webp",
+        caption: "Varkala's signature red cliffline, late afternoon."
       },
       {
-        tag: "COAST ROAD",
-        gradient: "linear-gradient(135deg, rgba(18,20,26,0.9), rgba(181,101,44,0.75))",
-        caption: "Narrow beach road on the way back through Kollam."
+        tag: "Beach, uncrowded",
+        image: "images/journal/varkala/vk2.webp",
+        caption: "The payoff for choosing a weekday."
+      },
+      {
+        tag: "Train in, greenery all the way",
+        image: "images/journal/varkala/vk3.webp",
+        caption: "The Kottayam stretch, worth the window seat."
+      },
+      {
+        tag: "Evening by the coast",
+        image: "images/journal/varkala/vk4.webp",
+        caption: "Varkala's after-dark side, minus the chaos."
       }
     ]
   },
 
-  kovalam: {
-    title: "Kovalam & South Cape",
-    tag: "Coast",
-    when: "Weekend loop",
+  vaalparai: {
+    title: "Vaalparai",
+    tag: "Tamil Nadu",
+    when: "May 2025",
     paragraphs: [
-      "A quick loop down to the southern tip. The stretch past Vizhinjam's new harbour has some wide, empty tarmac where you can just settle into a steady cruising rhythm. Stopped on the rocks near the lighthouse to listen to the waves hit the tetrapods and grab some fresh fried fish from the beach stall.",
-      "Salty visor and a sore clutch hand on the ride back into city traffic, but a good Saturday nonetheless."
+      "Vaalparai sits up in the Anamalai hills like it's daring you to make the trip — hairpin bends, tea estates, and a border crossing into a completely different rhythm of life, all in one ride.",
+      "Longest single-day ride I've ever done, solo, no overnight stop — just Vaalparai and back, returning via Pollachi on the Tamil Nadu side. People call it a \"seventh heaven\" kind of place and for once the hype held up — the roads, the views, the whole Tamil Nadu roadside-culture shift (different food, different pace, equally good) made the ride out feel effortless. The ride back is where reality caught up with me — turns out covering that much distance solo in a day catches up with your body whether your brain enjoyed itself or not."
     ],
-    footnote: "Fast highway run south • Salty wind all afternoon",
+    footnote: "Solo ride · One day, there and back, questionable life choices regarding rest stops",
     slides: [
       {
-        tag: "LIGHTHOUSE POINT",
-        gradient: "linear-gradient(135deg, rgba(181,101,44,0.85), rgba(27,30,39,0.95))",
-        caption: "Rocky headland overlooking the southern bay."
-      }
-    ]
-  },
-
-  dhanushkodi: {
-    title: "Dhanushkodi // Land's End",
-    tag: "Road trip",
-    when: "3-day interstate ride",
-    paragraphs: [
-      "The longest trip we've done on the bikes so far. Crossing the Pamban road bridge with the wind violently tugging at your jacket and helmet was equal parts terrifying and unforgettable.",
-      "The final stretch to Arichal Munai is surreal — just a thin ribbon of fresh asphalt running between two completely different shades of turquoise water. Walking around the 1964 cyclone church ruins half-buried in the white sand gives you actual goosebumps. Chain needed a serious scrub and kerosene wash once we got back from all the salty sand."
-    ],
-    footnote: "3 days, 900+ km • Pamban crosswinds & endless salt flats",
-    slides: [
-      {
-        tag: "ARICHAL MUNAI",
-        gradient: "linear-gradient(135deg, rgba(61,92,72,0.9), rgba(181,101,44,0.8))",
-        caption: "End of the road where the Indian Ocean meets the Bay of Bengal."
+        tag: "Anamalai hills",
+        image: "images/journal/vaalparai/vp1.webp",
+        caption: "The hill views that make the long ride worth it."
       },
       {
-        tag: "CHURCH RUINS",
-        gradient: "linear-gradient(135deg, rgba(18,20,26,0.95), rgba(140,135,120,0.8))",
-        caption: "The submerged town frozen in time since the 1964 storm."
+        tag: "Bike, borrowed view",
+        image: "images/journal/vaalparai/vp2.webp",
+        caption: "Parked up somewhere too scenic to ride past."
+      },
+      {
+        tag: "Tea country, Tamil Nadu side",
+        image: "images/journal/vaalparai/vp3.webp",
+        caption: "A different state, a similar green."
+      },
+      {
+        tag: "The long way back",
+        image: "images/journal/vaalparai/vp4.webp",
+        caption: "Somewhere on the return leg, tired but happy."
       }
     ]
   }
@@ -242,11 +337,8 @@ function initMapNavigation() {
   const surface = document.getElementById('mapSurface');
   if (!viewport || !surface) return;
 
-  const rect = viewport.getBoundingClientRect();
-  mapState.scale = window.innerWidth < 900 ? 0.75 : 1.0;
-  mapState.x = (rect.width - 2000 * mapState.scale) * 0.35;
-  mapState.y = (rect.height - 1400 * mapState.scale) * 0.45;
-  updateTransform();
+  // Set Home // Kochi as initial default view
+  focusOnHome(false);
 
   // Mouse Drag Events
   viewport.addEventListener('mousedown', (e) => {
@@ -326,7 +418,7 @@ function initMapNavigation() {
     updateTransform();
   }, { passive: false });
 
-  // Zoom Buttons
+  // Zoom & Point/Recenter Buttons
   document.getElementById('btnZoomIn')?.addEventListener('click', () => {
     smoothZoom(1.25);
   });
@@ -335,8 +427,9 @@ function initMapNavigation() {
     smoothZoom(0.8);
   });
 
+  // Point / Recenter Button (Centers on Home // Kochi)
   document.getElementById('btnZoomReset')?.addEventListener('click', () => {
-    focusOnSpot('munnar');
+    focusOnHome(true);
   });
 
   function smoothZoom(factor) {
@@ -353,6 +446,33 @@ function initMapNavigation() {
   }
 
   function updateTransform() {
+    surface.style.transform = `translate(${mapState.x}px, ${mapState.y}px) scale(${mapState.scale})`;
+  }
+}
+
+// Center view on Home // Kochi Basecamp
+function focusOnHome(smooth = true) {
+  const viewport = document.getElementById('mapViewport');
+  const surface = document.getElementById('mapSurface');
+  if (!viewport || !surface) return;
+
+  const rect = viewport.getBoundingClientRect();
+  const homeX = 440;
+  const homeY = 600;
+  const targetScale = window.innerWidth < 768 ? 0.95 : 1.0;
+
+  mapState.scale = targetScale;
+  mapState.x = rect.width / 2 - homeX * mapState.scale;
+  mapState.y = rect.height / 2 - homeY * mapState.scale;
+
+  if (smooth) {
+    surface.style.transition = 'transform 0.6s cubic-bezier(0.22, 0.68, 0.24, 1)';
+    surface.style.transform = `translate(${mapState.x}px, ${mapState.y}px) scale(${mapState.scale})`;
+    setTimeout(() => {
+      surface.style.transition = '';
+    }, 650);
+  } else {
+    surface.style.transition = '';
     surface.style.transform = `translate(${mapState.x}px, ${mapState.y}px) scale(${mapState.scale})`;
   }
 }
@@ -409,12 +529,39 @@ function initWaypoints() {
 /* ---------------- Spot Modal & Carousel Engine ---------------- */
 let currentSlideIndex = 0;
 let currentSpotData = null;
+let autoAdvanceTimer = null;
+let isHoveringCarousel = false;
+const AUTO_ADVANCE_DELAY = 4500;
+
+function startAutoAdvance() {
+  stopAutoAdvance();
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!currentSpotData || !currentSpotData.slides || currentSpotData.slides.length <= 1) return;
+  if (isHoveringCarousel) return;
+
+  autoAdvanceTimer = setInterval(() => {
+    goToSlide(currentSlideIndex + 1);
+  }, AUTO_ADVANCE_DELAY);
+}
+
+function stopAutoAdvance() {
+  if (autoAdvanceTimer) {
+    clearInterval(autoAdvanceTimer);
+    autoAdvanceTimer = null;
+  }
+}
+
+function restartAutoAdvance() {
+  stopAutoAdvance();
+  startAutoAdvance();
+}
 
 function openSpotLog(spotKey) {
   const data = WAYPOINT_DATA[spotKey];
   if (!data) return;
   currentSpotData = data;
   currentSlideIndex = 0;
+  isHoveringCarousel = false;
 
   const overlay = document.getElementById('spotModalOverlay');
   const titleEl = document.getElementById('modalTitle');
@@ -435,6 +582,7 @@ function openSpotLog(spotKey) {
   buildCarouselSlides(data.slides);
 
   overlay.classList.add('is-open');
+  startAutoAdvance();
 }
 
 function buildCarouselSlides(slides) {
@@ -468,14 +616,23 @@ function buildCarouselSlides(slides) {
         <p style="margin: 0.5rem 0 0; font-size: 0.88rem; opacity: 0.95; text-shadow: 0 1px 4px rgba(0,0,0,0.6);">${slide.caption}</p>
       </div>
     `;
-    track.appendChild(slideDiv);
 
+    // Click/tap on slide opens fullscreen lightbox
+    slideDiv.addEventListener('click', () => {
+      openLightbox(i);
+    });
+
+    track.appendChild(slideDiv);
 
     if (slides.length > 1) {
       const dot = document.createElement('button');
       dot.className = `carousel-dot ${i === 0 ? 'is-active' : ''}`;
       dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
-      dot.addEventListener('click', () => goToSlide(i));
+      dot.addEventListener('click', (e) => {
+        e.stopPropagation();
+        goToSlide(i);
+        restartAutoAdvance();
+      });
       dotsContainer.appendChild(dot);
     }
   });
@@ -507,8 +664,11 @@ function initModalCarousel() {
   const doneBtn = document.getElementById('modalDoneBtn');
   const prevBtn = document.getElementById('modalCarouselPrev');
   const nextBtn = document.getElementById('modalCarouselNext');
+  const container = document.querySelector('.spot-carousel-container');
 
   function closeDossier() {
+    stopAutoAdvance();
+    isHoveringCarousel = false;
     overlay.classList.remove('is-open');
   }
 
@@ -520,13 +680,178 @@ function initModalCarousel() {
   });
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && overlay.classList.contains('is-open')) {
-      closeDossier();
+    if (e.key === 'Escape') {
+      if (isLightboxOpen) {
+        closeLightbox();
+      } else if (overlay.classList.contains('is-open')) {
+        closeDossier();
+      }
+    } else if (isLightboxOpen) {
+      if (e.key === 'ArrowLeft') {
+        goToLightboxSlide(currentSlideIndex - 1);
+      } else if (e.key === 'ArrowRight') {
+        goToLightboxSlide(currentSlideIndex + 1);
+      }
     }
   });
 
-  prevBtn?.addEventListener('click', () => goToSlide(currentSlideIndex - 1));
-  nextBtn?.addEventListener('click', () => goToSlide(currentSlideIndex + 1));
+  prevBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    goToSlide(currentSlideIndex - 1);
+    restartAutoAdvance();
+  });
+  nextBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    goToSlide(currentSlideIndex + 1);
+    restartAutoAdvance();
+  });
+
+  // Pause on hover, resume when leaving
+  container?.addEventListener('mouseenter', () => {
+    isHoveringCarousel = true;
+    stopAutoAdvance();
+  });
+
+  container?.addEventListener('mouseleave', () => {
+    isHoveringCarousel = false;
+    startAutoAdvance();
+  });
+}
+
+/* ---------------- Fullscreen Photo Lightbox Engine ---------------- */
+let isLightboxOpen = false;
+
+function openLightbox(index) {
+  if (!currentSpotData || !currentSpotData.slides) return;
+  isLightboxOpen = true;
+  stopAutoAdvance(); // Pause auto-advance timer while lightbox is open
+
+  currentSlideIndex = (index !== undefined) ? index : currentSlideIndex;
+  renderLightboxSlide(currentSlideIndex);
+
+  const overlay = document.getElementById('photoLightboxOverlay');
+  overlay?.classList.add('is-open');
+}
+
+function closeLightbox() {
+  if (!isLightboxOpen) return;
+  isLightboxOpen = false;
+  const overlay = document.getElementById('photoLightboxOverlay');
+  overlay?.classList.remove('is-open');
+
+  // Keep underlying modal carousel in sync
+  updateCarouselPosition();
+
+  // Resume auto-advance if modal is still open
+  const modalOverlay = document.getElementById('spotModalOverlay');
+  if (modalOverlay?.classList.contains('is-open')) {
+    startAutoAdvance();
+  }
+}
+
+function goToLightboxSlide(index) {
+  if (!currentSpotData || !currentSpotData.slides) return;
+  const total = currentSpotData.slides.length;
+  currentSlideIndex = (index + total) % total;
+  renderLightboxSlide(currentSlideIndex);
+  updateCarouselPosition(); // Keep underlying modal in sync
+}
+
+function renderLightboxSlide(index) {
+  if (!currentSpotData || !currentSpotData.slides) return;
+  const slide = currentSpotData.slides[index];
+  if (!slide) return;
+
+  const mediaWrap = document.getElementById('lightboxMediaWrap');
+  const tagEl = document.getElementById('lightboxTag');
+  const captionEl = document.getElementById('lightboxCaption');
+  const prevBtn = document.getElementById('lightboxPrev');
+  const nextBtn = document.getElementById('lightboxNext');
+
+  if (currentSpotData.slides.length <= 1) {
+    if (prevBtn) prevBtn.style.display = 'none';
+    if (nextBtn) nextBtn.style.display = 'none';
+  } else {
+    if (prevBtn) prevBtn.style.display = 'flex';
+    if (nextBtn) nextBtn.style.display = 'flex';
+  }
+
+  if (tagEl) tagEl.textContent = slide.tag || '';
+  if (captionEl) captionEl.textContent = slide.caption || '';
+
+  if (mediaWrap) {
+    if (slide.image) {
+      mediaWrap.innerHTML = `
+        <img src="${slide.image}" alt="${slide.caption || slide.tag || 'Trip photo'}" class="lightbox-img" draggable="false" />
+      `;
+    } else {
+      mediaWrap.innerHTML = `
+        <div class="lightbox-gradient-art" style="background: ${slide.gradient || 'var(--card-bg)'};"></div>
+      `;
+    }
+  }
+}
+
+function initPhotoLightbox() {
+  const overlay = document.getElementById('photoLightboxOverlay');
+  const closeBtn = document.getElementById('lightboxClose');
+  const prevBtn = document.getElementById('lightboxPrev');
+  const nextBtn = document.getElementById('lightboxNext');
+  if (!overlay) return;
+
+  closeBtn?.addEventListener('click', closeLightbox);
+
+  // Close on backdrop click (outside the image / controls)
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay || e.target.id === 'lightboxStage' || e.target.id === 'lightboxMediaWrap') {
+      closeLightbox();
+    }
+  });
+
+  prevBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    goToLightboxSlide(currentSlideIndex - 1);
+  });
+
+  nextBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    goToLightboxSlide(currentSlideIndex + 1);
+  });
+
+  // Touch Swipe Gesture Support (Mobile / Touch Devices)
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchEndX = 0;
+  let touchEndY = 0;
+
+  overlay.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].clientX;
+    touchStartY = e.changedTouches[0].clientY;
+  }, { passive: true });
+
+  overlay.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].clientX;
+    touchEndY = e.changedTouches[0].clientY;
+    handleSwipe();
+  }, { passive: true });
+
+  function handleSwipe() {
+    if (!isLightboxOpen) return;
+    const diffX = touchEndX - touchStartX;
+    const diffY = touchEndY - touchStartY;
+    const minSwipeDistance = 35;
+
+    // Ensure horizontal swipe dominance
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > minSwipeDistance) {
+      if (diffX < 0) {
+        // Swiped left -> next photo
+        goToLightboxSlide(currentSlideIndex + 1);
+      } else {
+        // Swiped right -> previous photo
+        goToLightboxSlide(currentSlideIndex - 1);
+      }
+    }
+  }
 }
 
 /* ---------------- Map Category Filters ---------------- */

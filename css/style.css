@@ -81,7 +81,8 @@ html[data-theme="light"] {
   background: transparent;
 }
 
-input::selection, textarea::selection {
+input::selection,
+textarea::selection {
   background: color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
@@ -94,9 +95,12 @@ html {
 
 body {
   margin: 0;
-  background: var(--bg); /* solid base fallback */
-  background: var(--page-bg-fallback); /* gradient fallback for browsers without color-mix support */
-  background: var(--page-bg-gradient); /* continuous full-document background gradient */
+  background: var(--bg);
+  /* solid base fallback */
+  background: var(--page-bg-fallback);
+  /* gradient fallback for browsers without color-mix support */
+  background: var(--page-bg-gradient);
+  /* continuous full-document background gradient */
   color: var(--fg);
   font-family: var(--font-body);
   font-size: 16px;
@@ -110,7 +114,9 @@ body {
 }
 
 /* Allow text editing inside form fields */
-input, textarea, select {
+input,
+textarea,
+select {
   user-select: auto;
   -webkit-user-select: auto;
 }
@@ -125,7 +131,8 @@ button {
   -webkit-tap-highlight-color: transparent;
 }
 
-img, svg {
+img,
+svg {
   max-width: 100%;
   display: block;
   -webkit-user-drag: none;
@@ -1078,27 +1085,30 @@ html[data-theme="dark"] .icon-moon {
   aspect-ratio: 4/3;
   border-radius: 16px;
   margin-bottom: 1.2rem;
-  opacity: 0.9;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: var(--bg-2);
 }
 
 .journal-media-a {
-  background: linear-gradient(135deg, color-mix(in srgb, var(--backwater) 45%, var(--bg-2)), color-mix(in srgb, var(--rust) 20%, var(--bg-2)));
+  background-image: url('../images/journal/cover/mp_cover.webp');
 }
 
 .journal-media-b {
-  background: linear-gradient(135deg, color-mix(in srgb, var(--rust) 40%, var(--bg-2)), color-mix(in srgb, var(--backwater) 15%, var(--bg-2)));
+  background-image: url('../images/journal/cover/ch_cover.webp');
 }
 
 .journal-media-c {
-  background: linear-gradient(135deg, color-mix(in srgb, var(--backwater) 30%, var(--bg-2)), color-mix(in srgb, var(--rust) 32%, var(--bg-2)));
+  background-image: url('../images/journal/cover/vg_cover.webp');
 }
 
 .journal-media-d {
-  background: linear-gradient(150deg, color-mix(in srgb, var(--rust) 25%, var(--bg-2)), color-mix(in srgb, var(--backwater) 40%, var(--bg-2)));
+  background-image: url('../images/journal/cover/mg_cover.webp');
 }
 
 .journal-media-e {
-  background: linear-gradient(160deg, color-mix(in srgb, var(--backwater) 50%, var(--bg-2)), color-mix(in srgb, var(--rust) 12%, var(--bg-2)));
+  background-image: url('../images/journal/cover/pm_cover.webp');
 }
 
 .journal-card .journal-date {
@@ -1739,11 +1749,13 @@ html[data-theme="dark"] .custom-select-menu {
   flex-direction: column;
   align-items: flex-end;
   gap: 0.9rem;
-  pointer-events: none; /* Allows clicks on underlying links to pass through */
+  pointer-events: none;
+  /* Allows clicks on underlying links to pass through */
 }
 
 .chat-fab {
-  pointer-events: auto; /* Only the FAB button itself captures clicks */
+  pointer-events: auto;
+  /* Only the FAB button itself captures clicks */
   width: 58px;
   height: 58px;
   border-radius: 50%;
@@ -2258,14 +2270,37 @@ html[data-theme="light"] .dirtbike-img {
 }
 
 /* Staggered micro-delays (0 - 45ms) */
-.circuit-transition-overlay.is-active .trace-1 { transition-delay: 0ms; }
-.circuit-transition-overlay.is-active .trace-2 { transition-delay: 15ms; }
-.circuit-transition-overlay.is-active .trace-3 { transition-delay: 30ms; }
-.circuit-transition-overlay.is-active .trace-4 { transition-delay: 45ms; }
-.circuit-transition-overlay.is-active .trace-5 { transition-delay: 20ms; }
-.circuit-transition-overlay.is-active .trace-6 { transition-delay: 35ms; }
-.circuit-transition-overlay.is-active .trace-7 { transition-delay: 10ms; }
-.circuit-transition-overlay.is-active .trace-8 { transition-delay: 25ms; }
+.circuit-transition-overlay.is-active .trace-1 {
+  transition-delay: 0ms;
+}
+
+.circuit-transition-overlay.is-active .trace-2 {
+  transition-delay: 15ms;
+}
+
+.circuit-transition-overlay.is-active .trace-3 {
+  transition-delay: 30ms;
+}
+
+.circuit-transition-overlay.is-active .trace-4 {
+  transition-delay: 45ms;
+}
+
+.circuit-transition-overlay.is-active .trace-5 {
+  transition-delay: 20ms;
+}
+
+.circuit-transition-overlay.is-active .trace-6 {
+  transition-delay: 35ms;
+}
+
+.circuit-transition-overlay.is-active .trace-7 {
+  transition-delay: 10ms;
+}
+
+.circuit-transition-overlay.is-active .trace-8 {
+  transition-delay: 25ms;
+}
 
 .circuit-transition-overlay.is-active .pcb-trace {
   stroke-dashoffset: 0 !important;
