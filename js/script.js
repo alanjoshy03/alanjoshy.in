@@ -173,7 +173,7 @@ function initChatFab() {
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') wrap.classList.remove('open'); });
 }
 
-/* ---------------- Journal carousel (Discrete Step: 2s hold per card advance) ---------------- */
+/* ---------------- Journal carousel (Apple-style smooth drag & button scroll) ---------------- */
 function initJournalCarousel() {
   const wrap = document.querySelector('.journal-carousel-wrap');
   const track = document.getElementById('journalCarousel');
@@ -181,169 +181,96 @@ function initJournalCarousel() {
   const nextBtn = document.getElementById('journalNext');
   if (!wrap || !track) return;
 
-  // Duplicate cards for seamless infinite right-to-left stepping
-  const originalCards = Array.from(track.children);
-  originalCards.forEach(card => {
-    const clone = card.cloneNode(true);
-    clone.setAttribute('aria-hidden', 'true');
-    track.appendChild(clone);
-  });
-
-  let isPaused = false;
-  let intervalId = null;
-  let resumeTimer = null;
-  let activeAnimationId = null;
-  const HOLD_DURATION = 3000; // 3 seconds hold between steps
-  const SCROLL_DURATION = 850; // 850ms smooth cinematic ease transition
-
   function getCardStep() {
     const card = track.querySelector('.journal-card');
     if (!card) return 340;
     const style = window.getComputedStyle(track);
     let gap = parseFloat(style.columnGap || style.gap);
-    if (isNaN(gap)) gap = 22;
+    if (isNaN(gap)) gap = 18;
     return card.getBoundingClientRect().width + gap;
   }
 
-  // Smooth custom cubic easing scroll
-  function smoothScrollTo(targetLeft, duration = SCROLL_DURATION, onComplete) {
-    if (activeAnimationId) cancelAnimationFrame(activeAnimationId);
+  function updateButtonStates() {
+    if (!prevBtn && !nextBtn) return;
+    const maxScroll = track.scrollWidth - track.clientWidth;
+    const current = track.scrollLeft;
 
-    const startLeft = track.scrollLeft;
-    const change = targetLeft - startLeft;
-    const startTime = performance.now();
-
-    function easeInOutCubic(t) {
-      return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    if (prevBtn) {
+      const isStart = current <= 12;
+      prevBtn.disabled = isStart;
+      prevBtn.setAttribute('aria-disabled', isStart ? 'true' : 'false');
     }
-
-    function animate(currentTime) {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const ease = easeInOutCubic(progress);
-
-      track.scrollLeft = startLeft + change * ease;
-
-      if (progress < 1) {
-        activeAnimationId = requestAnimationFrame(animate);
-      } else {
-        activeAnimationId = null;
-        if (onComplete) onComplete();
-      }
-    }
-
-    activeAnimationId = requestAnimationFrame(animate);
-  }
-
-  function advanceNextCard() {
-    const step = getCardStep();
-    const halfWidth = track.scrollWidth / 2;
-
-    // Check if we need to reset scroll position before scrolling forward
-    if (track.scrollLeft >= halfWidth - 10) {
-      track.scrollLeft -= halfWidth;
-    }
-
-    const currentIndex = Math.round(track.scrollLeft / step);
-    const targetLeft = (currentIndex + 1) * step;
-
-    smoothScrollTo(targetLeft, SCROLL_DURATION, () => {
-      if (track.scrollLeft >= halfWidth - 10) {
-        track.scrollLeft -= halfWidth;
-      }
-    });
-  }
-
-  function advancePrevCard() {
-    const step = getCardStep();
-    const halfWidth = track.scrollWidth / 2;
-
-    if (track.scrollLeft <= 10) {
-      track.scrollLeft += halfWidth;
-    }
-
-    const currentIndex = Math.round(track.scrollLeft / step);
-    const targetLeft = Math.max(0, (currentIndex - 1) * step);
-
-    smoothScrollTo(targetLeft, SCROLL_DURATION);
-  }
-
-  // Re-align to exact card boundary on screen resize or orientation change
-  window.addEventListener('resize', () => {
-    const step = getCardStep();
-    const currentIndex = Math.round(track.scrollLeft / step);
-    track.scrollLeft = currentIndex * step;
-  });
-
-
-
-  function startAutoCycle() {
-    stopAutoCycle();
-    intervalId = setInterval(() => {
-      if (!isPaused) {
-        advanceNextCard();
-      }
-    }, HOLD_DURATION);
-  }
-
-  function stopAutoCycle() {
-    if (intervalId) {
-      clearInterval(intervalId);
-      intervalId = null;
+    if (nextBtn) {
+      const isEnd = current >= maxScroll - 12;
+      nextBtn.disabled = isEnd;
+      nextBtn.setAttribute('aria-disabled', isEnd ? 'true' : 'false');
     }
   }
 
-  function pauseAutoCycle(customHold) {
-    isPaused = true;
-    if (resumeTimer) clearTimeout(resumeTimer);
-    if (customHold) {
-      resumeTimer = setTimeout(() => {
-        isPaused = false;
-      }, customHold);
-    }
-  }
-
-  function resumeAutoCycle() {
-    if (resumeTimer) clearTimeout(resumeTimer);
-    isPaused = false;
-  }
-
+  // Button navigation
   if (prevBtn) {
     prevBtn.addEventListener('click', () => {
-      pauseAutoCycle(3500);
-      advancePrevCard();
+      const step = getCardStep();
+      track.scrollBy({ left: -step, behavior: 'smooth' });
     });
   }
 
   if (nextBtn) {
     nextBtn.addEventListener('click', () => {
-      pauseAutoCycle(3500);
-      advanceNextCard();
+      const step = getCardStep();
+      track.scrollBy({ left: step, behavior: 'smooth' });
     });
   }
 
-  // Pause on hover
-  wrap.addEventListener('mouseenter', () => pauseAutoCycle());
-  wrap.addEventListener('mouseleave', () => resumeAutoCycle());
+  // Update button states on scroll & resize
+  track.addEventListener('scroll', updateButtonStates, { passive: true });
+  window.addEventListener('resize', updateButtonStates);
+  updateButtonStates();
 
-  // Pause on touch or pointer interactions
-  wrap.addEventListener('touchstart', () => pauseAutoCycle(), { passive: true });
-  wrap.addEventListener('touchend', () => pauseAutoCycle(3000));
-  wrap.addEventListener('pointerdown', () => pauseAutoCycle());
-  wrap.addEventListener('pointerup', () => pauseAutoCycle(3000));
+  // Mouse drag-to-scroll (Apple-style interactive physics)
+  let isDown = false;
+  let startX = 0;
+  let scrollLeftStart = 0;
+  let hasDragged = false;
 
-  // Redirect to map with spot focus when clicking any card
+  track.addEventListener('mousedown', (e) => {
+    isDown = true;
+    hasDragged = false;
+    track.classList.add('is-dragging');
+    startX = e.pageX - track.offsetLeft;
+    scrollLeftStart = track.scrollLeft;
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    const x = e.pageX - track.offsetLeft;
+    const walk = (x - startX);
+    if (Math.abs(walk) > 4) {
+      hasDragged = true;
+    }
+    track.scrollLeft = scrollLeftStart - walk;
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (isDown) {
+      isDown = false;
+      track.classList.remove('is-dragging');
+    }
+  });
+
+  // Card click handling - only navigate if user didn't drag
   track.addEventListener('click', (e) => {
+    if (hasDragged) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
     const card = e.target.closest('.journal-card');
     if (card) {
       const spot = card.getAttribute('data-spot') || 'munnar';
       window.location.href = `journal-map?spot=${spot}`;
     }
   });
-
-  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    startAutoCycle();
-  }
 }
 
 

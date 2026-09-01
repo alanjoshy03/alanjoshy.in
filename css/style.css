@@ -214,7 +214,7 @@ em {
 .header-inner {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 1.1rem 2rem;
+  padding: 0.72rem 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -223,7 +223,7 @@ em {
 
 .brand {
   font-family: var(--font-display);
-  font-size: 1.4rem;
+  font-size: 1.25rem;
   font-weight: 600;
 }
 
@@ -233,15 +233,15 @@ em {
 
 .main-nav {
   display: flex;
-  gap: 2.1rem;
+  gap: 1.8rem;
 }
 
 .main-nav a {
-  font-size: 0.94rem;
+  font-size: 0.88rem;
   font-weight: 500;
   color: color-mix(in srgb, var(--fg) 82%, var(--bg) 18%);
   position: relative;
-  padding: 0.2rem 0;
+  padding: 0.15rem 0;
   transition: color .3s var(--ease);
 }
 
@@ -273,8 +273,8 @@ em {
 }
 
 .theme-toggle {
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   border: 1px solid var(--card-border);
   background: var(--card-bg);
@@ -286,8 +286,8 @@ em {
 }
 
 .theme-toggle svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
 }
 
 .icon-moon {
@@ -304,9 +304,9 @@ html[data-theme="dark"] .icon-moon {
 
 .btn-cta {
   font-family: var(--font-mono);
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   letter-spacing: 0.02em;
-  padding: 0.65rem 1.3rem;
+  padding: 0.5rem 1.15rem;
   border-radius: 999px;
   background: var(--accent);
   color: #fff;
@@ -414,10 +414,10 @@ html[data-theme="dark"] .icon-moon {
    ========================================================================== */
 .hero {
   position: relative;
-  min-height: 92vh;
+  min-height: 88vh;
   display: flex;
   align-items: center;
-  padding: 4rem 2rem 5rem;
+  padding: 3rem 2rem 3.6rem;
   overflow: hidden;
 }
 
@@ -445,7 +445,7 @@ html[data-theme="dark"] .icon-moon {
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
-  gap: 4rem;
+  gap: 3.5rem;
   align-items: center;
   width: 100%;
 }
@@ -453,28 +453,28 @@ html[data-theme="dark"] .icon-moon {
 .hero-headline {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(2.6rem, 5vw, 4.2rem);
+  font-size: clamp(2.3rem, 4.4vw, 3.8rem);
   line-height: 1.06;
-  margin: 0 0 1.6rem;
+  margin: 0 0 1.3rem;
   letter-spacing: -0.01em;
 }
 
 .hero-sub {
   max-width: 46ch;
   color: var(--fg-dim);
-  font-size: 1.08rem;
-  margin: 0 0 2.2rem;
+  font-size: 1.02rem;
+  margin: 0 0 1.8rem;
 }
 
 .hero-actions {
   display: flex;
-  gap: 2rem;
+  gap: 1.8rem;
   flex-wrap: wrap;
 }
 
 .link-arrow {
   font-family: var(--font-mono);
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   border-bottom: 1.5px solid var(--accent);
   padding-bottom: 0.2rem;
   transition: opacity .3s var(--ease), gap .3s var(--ease);
@@ -497,7 +497,7 @@ html[data-theme="dark"] .icon-moon {
 }
 
 .link-arrow.small {
-  font-size: 0.82rem;
+  font-size: 0.78rem;
 }
 
 /* neat stacked-card portrait: solid offset backer + tag badge, no blur haze */
@@ -505,13 +505,13 @@ html[data-theme="dark"] .icon-moon {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.1rem;
+  gap: 1rem;
 }
 
 .portrait-stack {
   position: relative;
   width: 100%;
-  max-width: 300px;
+  max-width: 260px;
 }
 
 .portrait-backer {
@@ -693,9 +693,9 @@ html[data-theme="dark"] .icon-moon {
    Sections — shared
    ========================================================================== */
 .section {
-  padding: 7rem 2rem;
+  padding: 4.8rem 2rem;
   position: relative;
-  scroll-margin-top: 84px;
+  scroll-margin-top: 72px;
 }
 
 .section-inner {
@@ -704,21 +704,21 @@ html[data-theme="dark"] .icon-moon {
 }
 
 .section-head {
-  margin-bottom: 2.6rem;
+  margin-bottom: 1.8rem;
 }
 
 .section-title {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(2rem, 3.4vw, 2.8rem);
+  font-size: clamp(1.85rem, 3.2vw, 2.6rem);
   margin: 0;
 }
 
 .section-lede {
   max-width: 64ch;
   color: var(--fg-dim);
-  font-size: 1.06rem;
-  margin-bottom: 2.6rem;
+  font-size: 1rem;
+  margin-bottom: 1.8rem;
 }
 
 .work-section {
@@ -732,13 +732,13 @@ html[data-theme="dark"] .icon-moon {
 
 .work-lede {
   max-width: 70ch;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .work-lede p {
   color: var(--fg-dim);
-  font-size: 1.06rem;
-  margin: 0 0 1.1rem;
+  font-size: 1rem;
+  margin: 0 0 0.9rem;
 }
 
 .work-lede strong {
@@ -748,8 +748,8 @@ html[data-theme="dark"] .icon-moon {
 .work-cards {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1.6rem;
-  margin-bottom: 3.2rem;
+  gap: 1.4rem;
+  margin-bottom: 2rem;
 }
 
 .work-card {
@@ -758,7 +758,7 @@ html[data-theme="dark"] .icon-moon {
     var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: var(--radius);
-  padding: 2rem;
+  padding: 1.5rem;
   transition: transform .4s var(--ease), border-color .4s var(--ease);
 }
 
@@ -775,44 +775,44 @@ html[data-theme="dark"] .icon-moon {
 
 .work-card-num {
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   color: var(--accent);
 }
 
 .work-card h3 {
   font-family: var(--font-display);
-  font-size: 1.35rem;
-  margin: 0.6rem 0 0.7rem;
+  font-size: 1.22rem;
+  margin: 0.5rem 0 0.55rem;
   font-weight: 500;
 }
 
 .work-card p {
   color: var(--fg-dim);
-  font-size: 0.96rem;
-  margin: 0 0 1.2rem;
+  font-size: 0.92rem;
+  margin: 0 0 1rem;
 }
 
 .contact-strip {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 2.4rem;
-  padding-top: 2rem;
+  gap: 2rem;
+  padding-top: 1.5rem;
   border-top: 1px solid var(--card-border);
 }
 
 .contact-label {
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: var(--fg-dim);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.2rem;
 }
 
 .contact-strip a:not(.btn-cta) {
-  font-size: 1.02rem;
+  font-size: 0.96rem;
 }
 
 .contact-strip a:not(.btn-cta):hover {
@@ -846,7 +846,7 @@ html[data-theme="dark"] .icon-moon {
 .lab-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.4rem;
+  gap: 1.1rem;
 }
 
 .lab-card {
@@ -854,8 +854,8 @@ html[data-theme="dark"] .icon-moon {
     linear-gradient(160deg, color-mix(in srgb, var(--backwater) 9%, transparent), transparent 65%),
     var(--card-bg);
   border: 1px solid var(--card-border);
-  border-radius: 18px;
-  padding: 1.8rem 1.5rem;
+  border-radius: 16px;
+  padding: 1.35rem 1.15rem;
   display: flex;
   flex-direction: column;
   transition: transform .4s var(--ease), border-color .4s var(--ease);
@@ -873,35 +873,35 @@ html[data-theme="dark"] .icon-moon {
 }
 
 .lab-card-icon {
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: linear-gradient(145deg, color-mix(in srgb, var(--backwater) 35%, transparent), color-mix(in srgb, var(--rust) 20%, transparent));
   color: var(--fg);
-  margin-bottom: 1.1rem;
+  margin-bottom: 0.85rem;
 }
 
 .lab-card-icon svg {
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
 }
 
 .lab-card h3 {
   font-family: var(--font-display);
-  font-size: 1.15rem;
-  margin: 0 0 0.6rem;
+  font-size: 1.05rem;
+  margin: 0 0 0.45rem;
   font-weight: 500;
   color: var(--fg);
 }
 
 .lab-card p {
   color: var(--fg-dim);
-  font-size: 0.9rem;
-  line-height: 1.55;
-  margin: 0 0 1.2rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin: 0 0 0.95rem;
   flex-grow: 1;
 }
 
@@ -911,17 +911,17 @@ html[data-theme="dark"] .icon-moon {
 
 /* Hardware Lab Explorer Strip */
 .hw-hub-strip {
-  margin-top: 2.5rem;
+  margin-top: 1.8rem;
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--accent) 12%, transparent), color-mix(in srgb, var(--backwater) 10%, transparent)),
     var(--card-bg);
   border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--card-border));
   border-radius: var(--radius);
-  padding: 2.2rem 2.4rem;
+  padding: 1.5rem 1.8rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 2rem;
+  gap: 1.6rem;
 }
 
 .hw-hub-content {
@@ -930,28 +930,28 @@ html[data-theme="dark"] .icon-moon {
 
 .hw-hub-title {
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 500;
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.4rem;
   color: var(--fg);
 }
 
 .hw-hub-desc {
   color: var(--fg-dim);
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin: 0 0 1.2rem;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  margin: 0 0 1rem;
 }
 
 .hw-hub-btn {
-  font-size: 1rem;
+  font-size: 0.92rem;
   font-weight: 600;
   color: var(--accent);
 }
 
 .lab-prototyping {
-  margin-top: 4.5rem;
-  padding-top: 2.5rem;
+  margin-top: 3rem;
+  padding-top: 1.8rem;
   border-top: 1px solid var(--card-border);
   max-width: 64ch;
 }
@@ -962,9 +962,9 @@ html[data-theme="dark"] .icon-moon {
 
 .lab-prototyping p:not(.eyebrow) {
   color: var(--fg-dim);
-  font-size: 1.04rem;
-  line-height: 1.65;
-  margin: 0 0 1.3rem;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  margin: 0 0 1.1rem;
 }
 
 @media (max-width: 1000px) {
@@ -979,7 +979,7 @@ html[data-theme="dark"] .icon-moon {
   }
 
   .hw-hub-strip {
-    padding: 1.6rem;
+    padding: 1.4rem;
   }
 }
 
@@ -994,43 +994,98 @@ html[data-theme="dark"] .icon-moon {
   margin-bottom: 0;
 }
 
-.carousel-controls {
-  display: flex;
-  gap: 0.6rem;
+.journal-carousel-wrap {
+  margin-top: 1.6rem;
+  position: relative;
 }
 
 .carousel-btn {
-  width: 38px;
-  height: 38px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   border: 1px solid var(--card-border);
-  background: var(--card-bg);
+  background: color-mix(in srgb, var(--bg) 84%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
   color: var(--fg);
   cursor: pointer;
-  font-size: 1rem;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: border-color .3s var(--ease), transform .3s var(--ease);
+  transition: transform .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease), opacity .3s var(--ease), visibility .3s var(--ease);
 }
 
-.carousel-btn:hover {
+.carousel-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke: var(--fg);
+  transition: stroke .25s var(--ease);
+}
+
+.carousel-btn-prev {
+  left: -20px;
+}
+
+.carousel-btn-next {
+  right: -20px;
+}
+
+.carousel-btn:hover:not(:disabled) {
+  transform: translateY(-50%) scale(1.08);
   border-color: var(--accent);
-  color: var(--accent);
-  transform: translateY(-2px);
+  background: var(--bg);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.22);
 }
 
-.journal-carousel-wrap {
-  margin-top: 2.2rem;
-  position: relative;
+.carousel-btn:hover:not(:disabled) svg {
+  stroke: var(--accent);
+}
+
+.carousel-btn:active:not(:disabled) {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.carousel-btn:disabled,
+.carousel-btn[aria-disabled="true"] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-50%) scale(0.85);
+}
+
+@media (max-width: 1240px) {
+  .carousel-btn-prev {
+    left: 8px;
+  }
+
+  .carousel-btn-next {
+    right: 8px;
+  }
 }
 
 .journal-carousel {
   display: flex;
-  gap: 1.4rem;
+  gap: 1.1rem;
   overflow-x: auto;
-  padding-bottom: 0.6rem;
+  padding: 12px 6px 14px;
+  margin: -12px -6px -14px;
   scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  cursor: grab;
+  user-select: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.journal-carousel.is-dragging {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  scroll-behavior: auto;
 }
 
 .journal-carousel::-webkit-scrollbar {
@@ -1038,7 +1093,7 @@ html[data-theme="dark"] .icon-moon {
 }
 
 .journal-card {
-  flex: 0 0 calc((100% - 2 * 1.4rem) / 3);
+  flex: 0 0 calc((100% - 2 * 1.1rem) / 3);
   min-width: 0;
   scroll-snap-align: start;
   background:
@@ -1046,30 +1101,31 @@ html[data-theme="dark"] .icon-moon {
     var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: var(--radius);
-  padding: 1.6rem;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
-  transition: transform .4s var(--ease), border-color .4s var(--ease);
+  transition: transform .4s var(--ease), border-color .4s var(--ease), box-shadow .4s var(--ease);
 }
 
 @media (max-width: 1024px) {
   .journal-card {
-    flex: 0 0 calc((100% - 1.2rem) / 2);
+    flex: 0 0 calc((100% - 1.1rem) / 2);
   }
 }
 
 @media (max-width: 680px) {
   .journal-carousel {
-    gap: 1.2rem;
-    padding: 0.4rem 0.1rem 0.8rem;
-    width: 100%;
+    gap: 1.1rem;
+    padding: 12px 6px 14px;
+    margin: -12px -6px -14px;
+    width: auto;
   }
 
   .journal-card {
     flex: 0 0 100%;
     width: 100%;
     max-width: 100%;
-    padding: 1.4rem;
+    padding: 1.25rem;
     box-sizing: border-box;
   }
 }
@@ -1082,9 +1138,9 @@ html[data-theme="dark"] .icon-moon {
 }
 
 .journal-media {
-  aspect-ratio: 4/3;
-  border-radius: 16px;
-  margin-bottom: 1.2rem;
+  aspect-ratio: 16/10;
+  border-radius: 14px;
+  margin-bottom: 0.9rem;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -1113,30 +1169,30 @@ html[data-theme="dark"] .icon-moon {
 
 .journal-card .journal-date {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--accent);
 }
 
 .journal-card h3 {
   font-family: var(--font-display);
-  font-size: 1.25rem;
+  font-size: 1.12rem;
   font-weight: 500;
-  margin: 0.5rem 0 0.6rem;
+  margin: 0.4rem 0 0.45rem;
 }
 
 .journal-card p {
   color: var(--fg-dim);
-  font-size: 0.92rem;
-  margin: 0 0 1.1rem;
+  font-size: 0.86rem;
+  margin: 0 0 0.85rem;
   flex-grow: 1;
 }
 
 .journal-note {
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   color: var(--fg-dim);
   font-style: italic;
   padding-left: 0.2rem;
-  margin-top: 1.8rem;
+  margin-top: 1.3rem;
 }
 
 @media (max-width:700px) {
@@ -1151,12 +1207,12 @@ html[data-theme="dark"] .icon-moon {
 .about-grid {
   display: grid;
   grid-template-columns: 1.4fr 0.9fr;
-  gap: 3rem;
+  gap: 2.2rem;
   align-items: start;
 }
 
 .about-copy {
-  font-size: 1.08rem;
+  font-size: 1rem;
   color: var(--fg-dim);
   max-width: 62ch;
 }
@@ -1167,23 +1223,23 @@ html[data-theme="dark"] .icon-moon {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
 .about-facts li {
-  font-size: 0.98rem;
+  font-size: 0.92rem;
   border-bottom: 1px solid var(--card-border);
-  padding-bottom: 0.9rem;
+  padding-bottom: 0.7rem;
 }
 
 .about-facts li span {
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--fg-dim);
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.25rem;
 }
 
 @media (max-width:800px) {
@@ -1196,7 +1252,7 @@ html[data-theme="dark"] .icon-moon {
    Footer
    ========================================================================== */
 .site-footer {
-  padding: 3.4rem 2rem 2.4rem;
+  padding: 2.4rem 2rem 2rem;
   border-top: 1px solid var(--card-border);
 }
 
@@ -1211,20 +1267,20 @@ html[data-theme="dark"] .icon-moon {
 
 .footer-brand p {
   color: var(--fg-dim);
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   max-width: 34ch;
-  margin: 0.6rem 0 0;
+  margin: 0.5rem 0 0;
 }
 
 .footer-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.4rem;
+  gap: 1.2rem;
   align-content: flex-start;
 }
 
 .footer-links a {
-  font-size: 0.9rem;
+  font-size: 0.86rem;
   color: var(--fg-dim);
 }
 
@@ -1235,9 +1291,9 @@ html[data-theme="dark"] .icon-moon {
 .footer-meta {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.35rem;
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   color: var(--fg-dim);
   text-align: right;
 }
@@ -1275,17 +1331,17 @@ html[data-theme="dark"] .icon-moon {
 .connect-grid {
   display: grid;
   grid-template-columns: 0.85fr 1.15fr;
-  gap: 3rem;
+  gap: 2.2rem;
   align-items: start;
 }
 
 .connect-info-row {
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
 }
 
 .connect-info-row a {
   display: block;
-  font-size: 1.05rem;
+  font-size: 0.98rem;
   margin-top: 0.2rem;
 }
 
@@ -1297,10 +1353,10 @@ html[data-theme="dark"] .icon-moon {
   background: var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: var(--radius);
-  padding: 2rem;
+  padding: 1.4rem;
   display: flex;
   flex-direction: column;
-  gap: 1.1rem;
+  gap: 0.85rem;
 }
 
 .input-text {
@@ -1308,10 +1364,10 @@ html[data-theme="dark"] .icon-moon {
   background: color-mix(in srgb, var(--bg) 60%, var(--bg-2) 40%);
   border: 1px solid var(--card-border);
   border-radius: 12px;
-  padding: 0.85rem 1rem;
+  padding: 0.68rem 0.85rem;
   color: var(--fg);
   font-family: var(--font-body);
-  font-size: 0.96rem;
+  font-size: 0.9rem;
   transition: border-color .3s var(--ease);
 }
 

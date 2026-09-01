@@ -233,10 +233,6 @@
             <p class="eyebrow">Roads, Mountains & Me</p>
             <h2 class="section-title">Journal</h2>
           </div>
-          <div class="carousel-controls">
-            <button class="carousel-btn" id="journalPrev" aria-label="Previous trip">&larr;</button>
-            <button class="carousel-btn" id="journalNext" aria-label="Next trip">&rarr;</button>
-          </div>
         </div>
         <p class="section-lede">
           Most weekends that aren't spoken for go to offroading, camping, or a long ride with no fixed plan — usually
@@ -247,6 +243,16 @@
         </p>
 
         <div class="journal-carousel-wrap">
+          <button class="carousel-btn carousel-btn-prev" id="journalPrev" aria-label="Previous trip" disabled aria-disabled="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <button class="carousel-btn carousel-btn-next" id="journalNext" aria-label="Next trip">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
           <div class="journal-carousel" id="journalCarousel">
 
             <article class="journal-card" data-spot="meeshapulimala">
