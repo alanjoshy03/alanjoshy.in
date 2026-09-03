@@ -268,7 +268,7 @@
   <!-- Bottom Navigation & Controls -->
   <footer class="map-hud-bottom">
     <div class="hud-bottom-left">
-      <span class="wishlist-text">Next on the bucket-list: Kolli Hills, Dhanushkodi, Kedarkantha, and so on..</span>
+      <span class="wishlist-text">Next on the bucket-list: Kolli Hills, Kedarkantha, +7 more</span>
     </div>
 
     <div class="hud-bottom-center">
@@ -303,42 +303,48 @@
     <div class="spot-modal-card" id="spotModalCard" role="dialog" aria-modal="true">
       <button class="spot-modal-close" id="spotModalClose" aria-label="Close notes">&times;</button>
 
-      <div class="spot-modal-header">
-        <div class="spot-modal-badge-row">
-          <span class="spot-meta-badge" id="modalTag">High range</span>
-          <span class="spot-meta-badge date" id="modalWhen">Monsoon ride</span>
-        </div>
-        <h2 class="spot-modal-title" id="modalTitle">Munnar Gap Road</h2>
-      </div>
+      <!-- Left Column: Full Image Carousel -->
+      <div class="spot-modal-media-col">
+        <div class="spot-carousel-container">
+          <div class="spot-carousel-track" id="modalCarouselTrack">
+            <!-- Slides injected dynamically -->
+          </div>
 
-      <!-- Carousel Frame -->
-      <div class="spot-carousel-container">
-        <div class="spot-carousel-track" id="modalCarouselTrack">
-          <!-- Slides injected dynamically -->
-        </div>
+          <button class="spot-carousel-arrow prev" id="modalCarouselPrev" aria-label="Previous image">&lsaquo;</button>
+          <button class="spot-carousel-arrow next" id="modalCarouselNext" aria-label="Next image">&rsaquo;</button>
 
-        <button class="spot-carousel-arrow prev" id="modalCarouselPrev" aria-label="Previous image">&lsaquo;</button>
-        <button class="spot-carousel-arrow next" id="modalCarouselNext" aria-label="Next image">&rsaquo;</button>
-
-        <div class="spot-carousel-dots" id="modalCarouselDots">
-          <!-- Dots injected dynamically -->
+          <div class="spot-carousel-dots" id="modalCarouselDots">
+            <!-- Dots injected dynamically -->
+          </div>
         </div>
       </div>
 
-      <!-- Natural Trip Log Content -->
-      <div class="spot-modal-body">
-        <div class="spot-story-wrap" id="modalStory">
-          <!-- Text injected dynamically -->
+      <!-- Right Column: Content -->
+      <div class="spot-modal-content-col">
+        <div class="spot-modal-header">
+          <div class="spot-modal-badge-row">
+            <span class="spot-meta-badge" id="modalTag">High range</span>
+            <span class="spot-meta-badge date" id="modalWhen">Monsoon ride</span>
+          </div>
+          <h2 class="spot-modal-title" id="modalTitle">Munnar Gap Road</h2>
         </div>
 
-        <div class="spot-footer-note" id="modalFootnote">
-          <!-- Context injected dynamically -->
+        <!-- Natural Trip Log Content -->
+        <div class="spot-modal-body">
+          <div class="spot-story-wrap" id="modalStory">
+            <!-- Text injected dynamically -->
+          </div>
+
+          <div class="spot-footer-note" id="modalFootnote">
+            <!-- Context injected dynamically -->
+          </div>
+        </div>
+
+        <div class="spot-modal-footer">
+          <button class="btn-cta" id="modalDoneBtn">Back to map</button>
         </div>
       </div>
 
-      <div class="spot-modal-footer">
-        <button class="btn-cta" id="modalDoneBtn">Back to map</button>
-      </div>
     </div>
   </div>
 

@@ -592,62 +592,22 @@ html[data-theme="dark"] .icon-moon {
   color: var(--fg-dim);
 }
 
-.scroll-cue {
-  position: absolute;
-  bottom: 2.2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--fg-dim);
-}
 
-.scroll-cue span {
-  width: 1px;
-  height: 34px;
-  background: var(--fg-dim);
-  position: relative;
-  overflow: hidden;
-}
-
-.scroll-cue span::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: -100%;
-  width: 100%;
-  height: 100%;
-  background: var(--accent);
-  animation: cueDrop 2s var(--ease) infinite;
-}
-
-@keyframes cueDrop {
-  to {
-    top: 100%;
-  }
-}
 
 @media (max-width:900px) {
   .hero {
-    padding: 8.8rem 1.5rem 5rem;
+    padding: 11.5rem 1.5rem 5rem;
     min-height: auto;
   }
 
   .hero-inner {
     grid-template-columns: 1fr;
-    gap: 6.5rem;
+    gap: 8.8rem;
     text-align: left;
   }
 
   .hero-headline {
-    margin-bottom: 4.2rem;
+    margin-bottom: 5.4rem;
   }
 
   .hero-sub {
@@ -684,9 +644,6 @@ html[data-theme="dark"] .icon-moon {
     transform: rotate(0deg);
   }
 
-  .scroll-cue {
-    display: none;
-  }
 
   /* translucent header when mobile menu is open */
   .site-header.menu-open {
@@ -760,13 +717,15 @@ html[data-theme="dark"] .icon-moon {
 }
 
 .work-card {
+  display: flex;
+  flex-direction: column;
   background:
     linear-gradient(155deg, color-mix(in srgb, var(--rust) 7%, transparent), transparent 60%),
     var(--card-bg);
   border: 1px solid var(--card-border);
   border-radius: var(--radius);
-  padding: 1.5rem;
-  transition: transform .4s var(--ease), border-color .4s var(--ease);
+  padding: 1.4rem;
+  transition: transform .4s var(--ease), border-color .4s var(--ease), box-shadow .4s var(--ease);
 }
 
 .work-card:nth-child(2) {
@@ -780,6 +739,176 @@ html[data-theme="dark"] .icon-moon {
   border-color: color-mix(in srgb, var(--accent) 45%, var(--card-border));
 }
 
+/* Subtle Scattered Floating Micro-Icons */
+.work-floating-icons {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.wf-icon {
+  position: absolute;
+  color: var(--fg);
+  opacity: 0.12;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  user-select: none;
+  pointer-events: none;
+  transition: opacity 0.5s ease, color 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.work-card:hover .wf-icon {
+  opacity: 0.28;
+}
+
+/* Card 01 Floating Icons (Financial / Compliance) */
+.work-card:nth-child(1) .wf-1 {
+  top: 14%;
+  right: 14%;
+  font-size: 1.55rem;
+  animation: floatA 6.2s ease-in-out infinite;
+}
+
+.work-card:nth-child(1) .wf-2 {
+  top: 48%;
+  right: 8%;
+  font-size: 1.15rem;
+  color: var(--accent);
+  animation: floatB 7.5s ease-in-out infinite 0.5s;
+}
+
+.work-card:nth-child(1) .wf-3 {
+  top: 18%;
+  left: 48%;
+  animation: floatC 8s ease-in-out infinite 1.2s;
+}
+
+.work-card:nth-child(1) .wf-4 {
+  bottom: 22%;
+  right: 28%;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--backwater);
+  animation: floatD 6.8s ease-in-out infinite 0.8s;
+}
+
+.work-card:nth-child(1) .wf-5 {
+  bottom: 18%;
+  left: 14%;
+  font-size: 0.85rem;
+  color: var(--accent);
+  animation: floatA 7.2s ease-in-out infinite 1.6s;
+}
+
+.work-card:nth-child(1) .wf-6 {
+  bottom: 14%;
+  right: 10%;
+  font-size: 1.1rem;
+  animation: floatB 6.5s ease-in-out infinite 2.2s;
+}
+
+/* Card 02 Floating Icons (Handcrafted Web) */
+.work-card:nth-child(2) .wf-1 {
+  top: 14%;
+  right: 12%;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--backwater);
+  animation: floatB 6.4s ease-in-out infinite;
+}
+
+.work-card:nth-child(2) .wf-2 {
+  top: 38%;
+  right: 28%;
+  font-size: 0.95rem;
+  color: var(--accent);
+  animation: floatA 7s ease-in-out infinite 0.6s;
+}
+
+.work-card:nth-child(2) .wf-3 {
+  bottom: 18%;
+  right: 10%;
+  font-size: 1.3rem;
+  animation: floatC 7.8s ease-in-out infinite 1.4s;
+}
+
+.work-card:nth-child(2) .wf-4 {
+  top: 18%;
+  left: 50%;
+  color: var(--accent);
+  animation: floatD 6.2s ease-in-out infinite 0.9s;
+}
+
+.work-card:nth-child(2) .wf-5 {
+  bottom: 15%;
+  left: 16%;
+  font-size: 0.72rem;
+  animation: floatA 8.2s ease-in-out infinite 1.6s;
+}
+
+.work-card:nth-child(2) .wf-6 {
+  bottom: 45%;
+  right: 6%;
+  font-size: 0.8rem;
+  color: var(--accent);
+  animation: floatB 6.6s ease-in-out infinite 2s;
+}
+
+@keyframes floatA {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate(3px, -6px) rotate(4deg);
+  }
+  66% {
+    transform: translate(-2px, -3px) rotate(-3deg);
+  }
+}
+
+@keyframes floatB {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  40% {
+    transform: translate(-4px, -5px) rotate(-5deg);
+  }
+  75% {
+    transform: translate(2px, -7px) rotate(3deg);
+  }
+}
+
+@keyframes floatC {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(4px, -6px) rotate(6deg);
+  }
+}
+
+@keyframes floatD {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  45% {
+    transform: translate(-3px, -5px) rotate(-4deg);
+  }
+}
+
+.work-card-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
 .work-card-num {
   font-family: var(--font-mono);
   font-size: 0.74rem;
@@ -789,7 +918,7 @@ html[data-theme="dark"] .icon-moon {
 .work-card h3 {
   font-family: var(--font-display);
   font-size: 1.22rem;
-  margin: 0.5rem 0 0.55rem;
+  margin: 0.45rem 0 0.55rem;
   font-weight: 500;
 }
 
@@ -797,6 +926,11 @@ html[data-theme="dark"] .icon-moon {
   color: var(--fg-dim);
   font-size: 0.92rem;
   margin: 0 0 1rem;
+  flex-grow: 1;
+}
+
+.work-card .link-arrow {
+  align-self: flex-start;
 }
 
 .contact-strip {
@@ -857,6 +991,7 @@ html[data-theme="dark"] .icon-moon {
 }
 
 .lab-card {
+  position: relative;
   background:
     linear-gradient(160deg, color-mix(in srgb, var(--backwater) 9%, transparent), transparent 65%),
     var(--card-bg);
@@ -866,6 +1001,22 @@ html[data-theme="dark"] .icon-moon {
   display: flex;
   flex-direction: column;
   transition: transform .4s var(--ease), border-color .4s var(--ease);
+}
+
+.lab-card-header {
+  display: contents;
+}
+
+.lab-card-toggle {
+  display: none;
+}
+
+.lab-card-collapse {
+  display: contents;
+}
+
+.lab-card-collapse-inner {
+  display: contents;
 }
 
 .lab-card:nth-child(2n) {
@@ -980,13 +1131,127 @@ html[data-theme="dark"] .icon-moon {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .lab-grid {
     grid-template-columns: 1fr;
+    gap: 1.15rem;
+  }
+
+  .lab-card {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    padding: 1rem 1.15rem;
+  }
+
+  .lab-card:hover {
+    transform: none;
+  }
+
+  .lab-card.is-expanded {
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--card-border));
+  }
+
+  .lab-card.is-expanded p {
+    user-select: text;
+  }
+
+  .lab-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    width: 100%;
+  }
+
+  .lab-card-icon {
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+
+  .lab-card-header h3 {
+    margin: 0;
+    padding-right: 0;
+    flex: 1;
+    font-size: 1rem;
+    line-height: 1.35;
+  }
+
+  .lab-card-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: static;
+    margin-left: auto;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    color: var(--fg-dim);
+    padding: 0;
+    pointer-events: auto;
+    transition: color 0.2s ease;
+  }
+
+  .lab-card-toggle svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .lab-card.is-expanded .lab-card-toggle {
+    color: var(--accent);
+  }
+
+  .lab-card.is-expanded .lab-card-toggle svg {
+    transform: rotate(180deg);
+  }
+
+  .lab-card-collapse {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.25s ease;
+    will-change: grid-template-rows, opacity;
+  }
+
+  .lab-card.is-expanded .lab-card-collapse {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+
+  .lab-card-collapse-inner {
+    display: block;
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .lab-card-collapse-inner p {
+    margin-top: 0.85rem;
+    margin-bottom: 0.95rem;
+  }
+
+  .lab-card-collapse-inner .link-arrow {
+    display: inline-flex;
+    margin-bottom: 0.15rem;
   }
 
   .hw-hub-strip {
     padding: 1.4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lab-card-collapse,
+  .lab-card-toggle,
+  .lab-card-toggle svg {
+    transition: none !important;
+  }
+  .wf-icon {
+    animation: none !important;
   }
 }
 
@@ -1009,22 +1274,20 @@ html[data-theme="dark"] .icon-moon {
 .carousel-btn {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-50%) translateZ(0);
   width: 42px;
   height: 42px;
   border-radius: 50%;
   border: 1px solid var(--card-border);
-  background: color-mix(in srgb, var(--bg) 84%, transparent);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
+  background: var(--card-bg);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
   color: var(--fg);
   cursor: pointer;
   z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease), opacity .3s var(--ease), visibility .3s var(--ease);
+  transition: transform .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease), opacity .25s var(--ease), visibility .25s var(--ease);
 }
 
 .carousel-btn svg {
@@ -1043,10 +1306,10 @@ html[data-theme="dark"] .icon-moon {
 }
 
 .carousel-btn:hover:not(:disabled) {
-  transform: translateY(-50%) scale(1.08);
+  transform: translateY(-50%) scale(1.08) translateZ(0);
   border-color: var(--accent);
   background: var(--bg);
-  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
 }
 
 .carousel-btn:hover:not(:disabled) svg {
@@ -1054,7 +1317,7 @@ html[data-theme="dark"] .icon-moon {
 }
 
 .carousel-btn:active:not(:disabled) {
-  transform: translateY(-50%) scale(0.95);
+  transform: translateY(-50%) scale(0.95) translateZ(0);
 }
 
 .carousel-btn:disabled,
@@ -1062,7 +1325,7 @@ html[data-theme="dark"] .icon-moon {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transform: translateY(-50%) scale(0.85);
+  transform: translateY(-50%) scale(0.85) translateZ(0);
 }
 
 @media (max-width: 1240px) {
@@ -1087,6 +1350,7 @@ html[data-theme="dark"] .icon-moon {
   cursor: grab;
   user-select: none;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
 }
 
 .journal-carousel.is-dragging {
@@ -1103,6 +1367,7 @@ html[data-theme="dark"] .icon-moon {
   flex: 0 0 calc((100% - 2 * 1.1rem) / 3);
   min-width: 0;
   scroll-snap-align: start;
+  scroll-snap-stop: normal;
   background:
     linear-gradient(150deg, color-mix(in srgb, var(--backwater) 8%, transparent), transparent 55%),
     var(--card-bg);
@@ -1111,7 +1376,9 @@ html[data-theme="dark"] .icon-moon {
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
-  transition: transform .4s var(--ease), border-color .4s var(--ease), box-shadow .4s var(--ease);
+  transform: translateZ(0);
+  contain: layout style;
+  transition: border-color .3s var(--ease);
 }
 
 @media (max-width: 1024px) {
@@ -1137,11 +1404,62 @@ html[data-theme="dark"] .icon-moon {
   }
 }
 
+@media (hover: hover) {
+  .journal-card:hover {
+    transform: translateY(-6px) translateZ(0);
+    border-color: color-mix(in srgb, var(--accent) 40%, var(--card-border));
+    transition: transform .3s var(--ease), border-color .3s var(--ease);
+  }
+}
 
+/* Upcoming Trailhead Card (Centered 3-tier teaser layout) */
+.journal-card-upcoming {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem 1.4rem;
+}
 
-.journal-card:hover {
-  transform: translateY(-6px);
-  border-color: color-mix(in srgb, var(--accent) 40%, var(--card-border));
+@media (hover: hover) {
+  .journal-card-upcoming:hover {
+    border-color: transparent !important;
+    box-shadow: none !important;
+    transform: translateY(-4px) translateZ(0);
+  }
+}
+
+.upcoming-content-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  max-width: 280px;
+  margin: auto;
+}
+
+.upcoming-title {
+  font-family: var(--font-display);
+  font-size: 1.55rem !important;
+  font-weight: 500;
+  line-height: 1.25;
+  margin: 0 0 0.75rem !important;
+  color: var(--fg);
+  text-align: center;
+}
+
+.upcoming-desc {
+  color: var(--fg-dim);
+  font-size: 0.94rem !important;
+  line-height: 1.5;
+  margin: 0 !important;
+  text-align: center;
 }
 
 .journal-media {
@@ -1152,6 +1470,7 @@ html[data-theme="dark"] .icon-moon {
   background-position: center;
   background-repeat: no-repeat;
   background-color: var(--bg-2);
+  transform: translateZ(0);
 }
 
 .journal-media-a {

@@ -92,7 +92,6 @@
           <span class="portrait-caption">Alan Joshy</span>
         </div>
       </div>
-      <div class="scroll-cue" aria-hidden="true"><span></span>scroll</div>
     </section>
 
     <!-- ============ WORK ============ -->
@@ -117,18 +116,56 @@
 
         <div class="work-cards">
           <article class="work-card">
-            <span class="work-card-num">01</span>
-            <h3>Tax, GST &amp; Compliance</h3>
-            <p>The usual stuff — GST filings, ITC reconciliation, statutory audits, registrations. Nothing glamorous,
-              but I'd rather get it right the first time than explain a mess later.</p>
-            <a href="#connect" class="link-arrow small">Talk tax <span>&rarr;</span></a>
+            <!-- Subtle Scattered Floating Micro-Icons -->
+            <div class="work-floating-icons" aria-hidden="true">
+              <span class="wf-icon wf-1">₹</span>
+              <span class="wf-icon wf-2">%</span>
+              <span class="wf-icon wf-3">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                </svg>
+              </span>
+              <span class="wf-icon wf-4">✓</span>
+              <span class="wf-icon wf-5">✦</span>
+              <span class="wf-icon wf-6">₹</span>
+            </div>
+
+            <div class="work-card-content">
+              <span class="work-card-num">01</span>
+              <h3>Tax, GST &amp; Compliance</h3>
+              <p>The usual stuff — GST filings, ITC reconciliation, statutory audits, registrations. Nothing glamorous,
+                but I'd rather get it right the first time than explain a mess later.</p>
+              <a href="#connect" class="link-arrow small">Talk tax <span>&rarr;</span></a>
+            </div>
           </article>
+
           <article class="work-card">
-            <span class="work-card-num">02</span>
-            <h3>Websites, built by hand</h3>
-            <p>Landing pages, small business sites. I still write most of it by hand &mdash; HTML, CSS, a bit
-              of PHP or Python if the project asks for it. No framework just because it's trendy.</p>
-            <a href="#connect" class="link-arrow small">Start a project <span>&rarr;</span></a>
+            <!-- Subtle Scattered Floating Micro-Icons -->
+            <div class="work-floating-icons" aria-hidden="true">
+              <span class="wf-icon wf-1">&lt;/&gt;</span>
+              <span class="wf-icon wf-2">✦</span>
+              <span class="wf-icon wf-3">{ }</span>
+              <span class="wf-icon wf-4">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 3l7 18 3-7 7-3L3 3z"></path>
+                </svg>
+              </span>
+              <span class="wf-icon wf-5">/* craft */</span>
+              <span class="wf-icon wf-6">✦</span>
+            </div>
+
+            <div class="work-card-content">
+              <span class="work-card-num">02</span>
+              <h3>Websites, built by hand</h3>
+              <p>Landing pages, small business sites. I still write most of it by hand &mdash; HTML, CSS, a bit
+                of PHP or Python if the project asks for it. No framework just because it's trendy.</p>
+              <a href="#connect" class="link-arrow small">Start a project <span>&rarr;</span></a>
+            </div>
           </article>
         </div>
 
@@ -160,56 +197,110 @@
 
         <div class="lab-grid">
           <article class="lab-card">
-            <div class="lab-card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <rect x="3" y="4" width="18" height="12" rx="1" />
-                <path d="M8 20h8M12 16v4" />
-              </svg>
+            <div class="lab-card-header">
+              <div class="lab-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="3" y="4" width="18" height="12" rx="1" />
+                  <path d="M8 20h8M12 16v4" />
+                </svg>
+              </div>
+              <h3>Desktop Ambient Monitor Light</h3>
+              <button type="button" class="lab-card-toggle"
+                aria-label="Toggle details for Desktop Ambient Monitor Light" aria-expanded="false">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
             </div>
-            <h3>Desktop Ambient Monitor Light</h3>
-            <p>Reads 32 edge colours off my monitor in real time at 60 FPS and casts bias lighting onto the wall — with
-              architectural wall integration and auto-dimming.</p>
-            <a href="hardware-lab?build=ambient" class="link-arrow small">Read more <span>&rarr;</span></a>
+            <div class="lab-card-collapse">
+              <div class="lab-card-collapse-inner">
+                <p>Reads 32 edge colours off my monitor in real time at 60 FPS and casts bias lighting onto the wall —
+                  with
+                  architectural wall integration and auto-dimming.</p>
+                <a href="hardware-lab?build=ambient" class="link-arrow small">Read more <span>&rarr;</span></a>
+              </div>
+            </div>
           </article>
 
           <article class="lab-card">
-            <div class="lab-card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
-              </svg>
+            <div class="lab-card-header">
+              <div class="lab-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
+                </svg>
+              </div>
+              <h3>Smart Mist Sprayer &amp; Diffuser</h3>
+              <button type="button" class="lab-card-toggle"
+                aria-label="Toggle details for Smart Mist Sprayer &amp; Diffuser" aria-expanded="false">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
             </div>
-            <h3>Smart Mist Sprayer &amp; Diffuser</h3>
-            <p>Senses when you enter the room and turns on automatically. Features custom schedules, multiple mist
-              modes, scent options, and pairs with Alexa &amp; Google Home.</p>
-            <a href="hardware-lab?build=mist" class="link-arrow small">Read more <span>&rarr;</span></a>
+            <div class="lab-card-collapse">
+              <div class="lab-card-collapse-inner">
+                <p>Senses when you enter the room and turns on automatically. Features custom schedules, multiple mist
+                  modes, scent options, and pairs with Alexa &amp; Google Home.</p>
+                <a href="hardware-lab?build=mist" class="link-arrow small">Read more <span>&rarr;</span></a>
+              </div>
+            </div>
           </article>
 
           <article class="lab-card">
-            <div class="lab-card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <rect x="3" y="4" width="18" height="13" rx="2" />
-                <path d="M7 11h10M7 14h6" />
-                <circle cx="17" cy="8" r="1.5" fill="currentColor" />
-              </svg>
+            <div class="lab-card-header">
+              <div class="lab-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="3" y="4" width="18" height="13" rx="2" />
+                  <path d="M7 11h10M7 14h6" />
+                  <circle cx="17" cy="8" r="1.5" fill="currentColor" />
+                </svg>
+              </div>
+              <h3>Smart Tank Manager Dashboard</h3>
+              <button type="button" class="lab-card-toggle" aria-label="Toggle details for Smart Tank Manager Dashboard"
+                aria-expanded="false">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
             </div>
-            <h3>Smart Tank Manager Dashboard</h3>
-            <p>Senses water level in both tanks, runs the pump, strictly cuts off before it ever runs dry — with a
-              dedicated desktop console &amp; remote web monitoring.</p>
-            <a href="hardware-lab?build=tank" class="link-arrow small">Read more <span>&rarr;</span></a>
+            <div class="lab-card-collapse">
+              <div class="lab-card-collapse-inner">
+                <p>Senses water level in both tanks, runs the pump, strictly cuts off before it ever runs dry — with a
+                  dedicated desktop console &amp; remote web monitoring.</p>
+                <a href="hardware-lab?build=tank" class="link-arrow small">Read more <span>&rarr;</span></a>
+              </div>
+            </div>
           </article>
 
           <article class="lab-card">
-            <div class="lab-card-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M9 18V5l12-2v13" />
-                <circle cx="6" cy="18" r="3" />
-                <circle cx="18" cy="16" r="3" />
-              </svg>
+            <div class="lab-card-header">
+              <div class="lab-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M9 18V5l12-2v13" />
+                  <circle cx="6" cy="18" r="3" />
+                  <circle cx="18" cy="16" r="3" />
+                </svg>
+              </div>
+              <h3>5.1 Home Theatre, Auto-Tuned</h3>
+              <button type="button" class="lab-card-toggle" aria-label="Toggle details for 5.1 Home Theatre, Auto-Tuned"
+                aria-expanded="false">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
             </div>
-            <h3>5.1 Home Theatre, Auto-Tuned</h3>
-            <p>A 500W setup with room correction — it listens to the space and adjusts tone and volume live, no manual
-              EQ-ing.</p>
-            <a href="hardware-lab?build=theatre" class="link-arrow small">Read more <span>&rarr;</span></a>
+            <div class="lab-card-collapse">
+              <div class="lab-card-collapse-inner">
+                <p>A 500W setup with room correction — it listens to the space and adjusts tone and volume live, no
+                  manual
+                  EQ-ing.</p>
+                <a href="hardware-lab?build=theatre" class="link-arrow small">Read more <span>&rarr;</span></a>
+              </div>
+            </div>
           </article>
         </div>
 
@@ -217,7 +308,8 @@
           <p class="eyebrow">One more thing</p>
           <p>Stuck on a school or college electronics project? I take these on too — from circuit design to a working
             prototype.</p>
-          <a href="hardware-lab?build=student" class="link-arrow small">View prototyping options <span>&rarr;</span></a>
+          <a href="hardware-lab?build=student" class="link-arrow small">View all builds
+            <span>&rarr;</span></a>
         </div>
       </div>
 
@@ -243,13 +335,16 @@
         </p>
 
         <div class="journal-carousel-wrap">
-          <button class="carousel-btn carousel-btn-prev" id="journalPrev" aria-label="Previous trip" disabled aria-disabled="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <button class="carousel-btn carousel-btn-prev" id="journalPrev" aria-label="Previous trip" disabled
+            aria-disabled="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
               <polyline points="15 18 9 12 15 6"></polyline>
             </svg>
           </button>
           <button class="carousel-btn carousel-btn-next" id="journalNext" aria-label="Next trip">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
               <polyline points="9 18 15 12 9 6"></polyline>
             </svg>
           </button>
@@ -300,6 +395,13 @@
               <a href="journal-map?spot=panchalimedu" class="link-arrow small read-more" data-spot="panchalimedu">Read
                 more
                 <span>&rarr;</span></a>
+            </article>
+
+            <article class="journal-card journal-card-upcoming" data-spot="all">
+              <div class="upcoming-content-wrap">
+                <h3 class="upcoming-title">The map keeps growing</h3>
+                <p class="upcoming-desc">Explore highlights from the link below</p>
+              </div>
             </article>
 
           </div>
@@ -478,10 +580,10 @@
         <p>Tax consultant, hardware tinkerer, occasional traveller — Kerala, India.</p>
       </div>
       <div class="footer-links">
-        <a href="https://github.com/alanjoshy03" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://linkedin.com/in/alanjoshy03" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://instagram.com/alanjoshy03" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://x.com/alanjoshy03" target="_blank" rel="noopener">X</a>
+        <a href="https://github.com/alanjoshy.in" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://linkedin.com/in/alanjoshy.in" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://instagram.com/alanjoshy.in" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://x.com/alanjoshy_in" target="_blank" rel="noopener">X</a>
         <a href="https://wa.me/916282406091?text=Hi%20Alan%2C%20saw%20your%20portfolio%20and%20wanted%20to%20reach%20out."
           target="_blank" rel="noopener">WhatsApp</a>
         <a href="perks">Perks</a>

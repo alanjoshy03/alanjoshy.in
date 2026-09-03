@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initJournalCarousel();
   initXPulseRideLauncher();
   initCircuitTransition();
+  initHardwareLabAccordion();
   initConnectForm();
   initCustomSelect();
   document.getElementById('year').textContent = new Date().getFullYear();
@@ -173,13 +174,23 @@ function initChatFab() {
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') wrap.classList.remove('open'); });
 }
 
-/* ---------------- Journal carousel (Apple-style smooth drag & button scroll) ---------------- */
+/* ---------------- Journal carousel (Optimized for 60-120 FPS on all devices) ---------------- */
 function initJournalCarousel() {
   const wrap = document.querySelector('.journal-carousel-wrap');
   const track = document.getElementById('journalCarousel');
   const prevBtn = document.getElementById('journalPrev');
   const nextBtn = document.getElementById('journalNext');
   if (!wrap || !track) return;
+
+  let cachedMaxScroll = 0;
+  let isTicking = false;
+  let prevIsStart = null;
+  let nextIsEnd = null;
+
+  function updateMetrics() {
+    cachedMaxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+    updateButtonStates();
+  }
 
   function getCardStep() {
     const card = track.querySelector('.journal-card');
@@ -192,18 +203,33 @@ function initJournalCarousel() {
 
   function updateButtonStates() {
     if (!prevBtn && !nextBtn) return;
-    const maxScroll = track.scrollWidth - track.clientWidth;
     const current = track.scrollLeft;
 
     if (prevBtn) {
       const isStart = current <= 12;
-      prevBtn.disabled = isStart;
-      prevBtn.setAttribute('aria-disabled', isStart ? 'true' : 'false');
+      if (isStart !== prevIsStart) {
+        prevIsStart = isStart;
+        prevBtn.disabled = isStart;
+        prevBtn.setAttribute('aria-disabled', isStart ? 'true' : 'false');
+      }
     }
     if (nextBtn) {
-      const isEnd = current >= maxScroll - 12;
-      nextBtn.disabled = isEnd;
-      nextBtn.setAttribute('aria-disabled', isEnd ? 'true' : 'false');
+      const isEnd = current >= cachedMaxScroll - 12;
+      if (isEnd !== nextIsEnd) {
+        nextIsEnd = isEnd;
+        nextBtn.disabled = isEnd;
+        nextBtn.setAttribute('aria-disabled', isEnd ? 'true' : 'false');
+      }
+    }
+  }
+
+  function onScroll() {
+    if (!isTicking) {
+      requestAnimationFrame(() => {
+        updateButtonStates();
+        isTicking = false;
+      });
+      isTicking = true;
     }
   }
 
@@ -222,26 +248,18 @@ function initJournalCarousel() {
     });
   }
 
-  // Update button states on scroll & resize
-  track.addEventListener('scroll', updateButtonStates, { passive: true });
-  window.addEventListener('resize', updateButtonStates);
-  updateButtonStates();
+  // Throttled scroll & cached resize listeners
+  track.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', updateMetrics, { passive: true });
+  updateMetrics();
 
-  // Mouse drag-to-scroll (Apple-style interactive physics)
+  // Mouse drag-to-scroll (only active during actual mouse hold)
   let isDown = false;
   let startX = 0;
   let scrollLeftStart = 0;
   let hasDragged = false;
 
-  track.addEventListener('mousedown', (e) => {
-    isDown = true;
-    hasDragged = false;
-    track.classList.add('is-dragging');
-    startX = e.pageX - track.offsetLeft;
-    scrollLeftStart = track.scrollLeft;
-  });
-
-  window.addEventListener('mousemove', (e) => {
+  function onMouseMove(e) {
     if (!isDown) return;
     const x = e.pageX - track.offsetLeft;
     const walk = (x - startX);
@@ -249,13 +267,25 @@ function initJournalCarousel() {
       hasDragged = true;
     }
     track.scrollLeft = scrollLeftStart - walk;
-  });
+  }
 
-  window.addEventListener('mouseup', () => {
+  function onMouseUp() {
     if (isDown) {
       isDown = false;
       track.classList.remove('is-dragging');
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseup', onMouseUp);
     }
+  }
+
+  track.addEventListener('mousedown', (e) => {
+    isDown = true;
+    hasDragged = false;
+    track.classList.add('is-dragging');
+    startX = e.pageX - track.offsetLeft;
+    scrollLeftStart = track.scrollLeft;
+    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    window.addEventListener('mouseup', onMouseUp);
   });
 
   // Card click handling - only navigate if user didn't drag
@@ -267,8 +297,12 @@ function initJournalCarousel() {
     }
     const card = e.target.closest('.journal-card');
     if (card) {
-      const spot = card.getAttribute('data-spot') || 'munnar';
-      window.location.href = `journal-map?spot=${spot}`;
+      const spot = card.getAttribute('data-spot');
+      if (spot && spot !== 'all') {
+        window.location.href = `journal-map?spot=${spot}`;
+      } else {
+        window.location.href = `journal-map`;
+      }
     }
   });
 }
@@ -581,4 +615,51 @@ function initCircuitTransition() {
     }, 480);
   });
 }
+
+/* ---------------- Hardware Lab Mobile Accordion ---------------- */
+function initHardwareLabAccordion() {
+  const labGrid = document.querySelector('.lab-grid');
+  if (!labGrid) return;
+
+  const mobileQuery = window.matchMedia('(max-width: 768px)');
+
+  labGrid.addEventListener('click', (e) => {
+    // Only active on mobile screens
+    if (!mobileQuery.matches) return;
+
+    // Do NOT intercept clicks on links (e.g. Read more ->)
+    if (e.target.closest('a')) return;
+
+    const card = e.target.closest('.lab-card');
+    if (!card || !labGrid.contains(card)) return;
+
+    const isCurrentlyExpanded = card.classList.contains('is-expanded');
+
+    // Collapse all cards in the grid (single expanded accordion)
+    labGrid.querySelectorAll('.lab-card').forEach((c) => {
+      c.classList.remove('is-expanded');
+      const toggle = c.querySelector('.lab-card-toggle');
+      if (toggle) toggle.setAttribute('aria-expanded', 'false');
+    });
+
+    // If it was not already open, expand it
+    if (!isCurrentlyExpanded) {
+      card.classList.add('is-expanded');
+      const toggle = card.querySelector('.lab-card-toggle');
+      if (toggle) toggle.setAttribute('aria-expanded', 'true');
+    }
+  });
+
+  // Reset expanded state if window is resized above mobile breakpoint
+  mobileQuery.addEventListener('change', (e) => {
+    if (!e.matches) {
+      labGrid.querySelectorAll('.lab-card').forEach((c) => {
+        c.classList.remove('is-expanded');
+        const toggle = c.querySelector('.lab-card-toggle');
+        if (toggle) toggle.setAttribute('aria-expanded', 'false');
+      });
+    }
+  });
+}
+
 
