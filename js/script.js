@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
+  initCleanUrlNavigation();
   initScrollEffects();
   initMobileMenu();
   initReveal();
@@ -13,6 +14,38 @@ document.addEventListener('DOMContentLoaded', () => {
   initCustomSelect();
   document.getElementById('year').textContent = new Date().getFullYear();
 });
+
+/* ---------------- Clean URL & Hash-free Navigation ---------------- */
+function initCleanUrlNavigation() {
+  // If visited with a #hash, scroll smoothly to section and clean hash immediately
+  if (window.location.hash) {
+    const targetId = window.location.hash.substring(1);
+    const targetEl = document.getElementById(targetId);
+    if (targetEl) {
+      setTimeout(() => {
+        targetEl.scrollIntoView({ behavior: 'smooth' });
+      }, 60);
+    }
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+  }
+
+  // Intercept all in-page anchor clicks so browser address bar never displays /#hash
+  document.addEventListener('click', (e) => {
+    const anchor = e.target.closest('a');
+    if (!anchor) return;
+    const href = anchor.getAttribute('href');
+    if (!href || !href.startsWith('#') || href === '#') return;
+
+    const targetId = href.substring(1);
+    const targetEl = document.getElementById(targetId);
+    if (targetEl) {
+      e.preventDefault();
+      targetEl.scrollIntoView({ behavior: 'smooth' });
+      // Keep browser address bar clean and professional
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+  });
+}
 
 /* ---------------- Theme toggle (Default to daymode / light) ---------------- */
 function initTheme() {
@@ -125,16 +158,57 @@ function initReveal() {
   items.forEach(i => io.observe(i));
 }
 
-/* ---------------- Live IST clock ---------------- */
+/* ---------------- Live IST clock (Zero-overhead on low-tier devices) ---------------- */
 function initClock() {
   const el = document.getElementById('liveClock');
   if (!el) return;
+
+  // Cache formatter instance once (prevents object churn and GC pauses on low-tier phones)
+  const dtf = new Intl.DateTimeFormat([], {
+    timeZone: 'Asia/Kolkata',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  });
+
   function tick() {
-    const options = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: false };
-    el.textContent = new Intl.DateTimeFormat([], options).format(new Date()) + ' IST';
+    el.textContent = dtf.format(new Date()) + ' IST';
   }
+
   tick();
-  setInterval(tick, 1000 * 30);
+
+  let timer = null;
+  function start() {
+    if (!timer && !document.hidden) {
+      tick();
+      timer = setInterval(tick, 1000);
+    }
+  }
+
+  function stop() {
+    if (timer) {
+      clearInterval(timer);
+      timer = null;
+    }
+  }
+
+  // Only tick when the footer clock is actually visible on screen
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) start();
+        else stop();
+      });
+    }, { threshold: 0 });
+    io.observe(el);
+  } else {
+    start();
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stop();
+  });
 }
 
 

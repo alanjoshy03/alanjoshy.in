@@ -188,6 +188,9 @@ button {
   left: 0;
   transform-origin: 0 0;
   will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
 }
 
 .map-svg-terrain {
@@ -773,6 +776,61 @@ button {
   margin-bottom: 0;
 }
 
+/* Google Map Location Link (Clean text link with location icon) */
+.spot-map-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.1rem;
+  margin-top: 1.15rem;
+}
+
+.spot-map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  background: transparent;
+  border: none;
+  padding: 0;
+  text-decoration: none;
+  transition: all 0.2s var(--ease);
+}
+
+.spot-map-link:hover {
+  color: #000;
+}
+
+.spot-map-link:hover span:first-of-type {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.spot-map-link .spot-map-link-arrow {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  transition: transform 0.22s var(--ease), stroke 0.2s var(--ease);
+}
+
+.spot-map-link:hover .spot-map-link-arrow {
+  transform: translate(2.5px, -2.5px);
+  stroke: #000;
+}
+
+[data-theme="dark"] .spot-map-link:hover {
+  color: #fff;
+}
+
+[data-theme="dark"] .spot-map-link:hover .spot-map-link-arrow {
+  stroke: #fff;
+}
+
 .spot-footer-note {
   font-family: var(--font-mono);
   font-size: 0.78rem;
@@ -1322,4 +1380,42 @@ button {
   .lightbox-arrow.next {
     right: max(0.5rem, env(safe-area-inset-right));
   }
+}
+
+/* ==========================================================================
+   Dark Mode Performance & Matte Charcoal Styling (Zero Blur Pipeline Overhead)
+   ========================================================================== */
+html[data-theme="dark"] .map-hud-top,
+html[data-theme="dark"] .map-hud-bottom,
+html[data-theme="dark"] .pin-label,
+html[data-theme="dark"] .spot-modal-overlay,
+html[data-theme="dark"] .hud-filter-btn,
+html[data-theme="dark"] .hud-back-btn,
+html[data-theme="dark"] .theme-toggle,
+html[data-theme="dark"] .lightbox-arrow {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html[data-theme="dark"] .map-hud-top {
+  background: rgba(17, 18, 21, 0.96);
+}
+
+html[data-theme="dark"] .map-hud-bottom {
+  background: rgba(17, 18, 21, 0.96);
+}
+
+html[data-theme="dark"] .pin-label {
+  background: #18191D;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05), 0 4px 14px -3px rgba(0, 0, 0, 0.5);
+}
+
+html[data-theme="dark"] .spot-modal-overlay {
+  background: rgba(10, 11, 13, 0.85);
+}
+
+html[data-theme="dark"] .spot-modal-card {
+  background: #18191D;
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06), 0 32px 70px -18px rgba(0, 0, 0, 0.7);
 }

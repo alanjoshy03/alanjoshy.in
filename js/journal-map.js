@@ -11,9 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
   initPhotoLightbox();
   initFilters();
 
-  // Auto-focus and open spot log if passed in URL query param: journal-map.html?spot=chimmini
+  // Auto-focus and open spot log if passed in URL query param: journal-map?spot=chimmini
   const urlParams = new URLSearchParams(window.location.search);
-  const spotParam = urlParams.get('spot') || window.location.hash.replace('#', '');
+  const spotParam = urlParams.get('spot') || (window.location.hash ? window.location.hash.replace('#', '') : null);
+  if (window.location.hash) {
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+  }
   if (spotParam && WAYPOINT_DATA[spotParam]) {
     setTimeout(() => {
       focusOnSpot(spotParam);
@@ -53,6 +56,9 @@ const WAYPOINT_DATA = {
       "Chokramudi doesn't do gentle inclines — it's steep from the first step and stays that way, which is either character-building or just cruel, depending on how your knees are feeling that day.",
       "Rode up with three friends the evening before, grabbed a stay nearby, and started the climb early — smart move, since by mid-climb the sun was doing its best to end us. Multiple terrain changes on the way up (rock, grass, more rock) kept things interesting in a way that mostly meant \"don't look down.\" Slow and steady actually works here — anyone who sprints the first stretch regrets it by the second. The summit view, though, genuinely earns the suffering: Kolukkumalai, Meesapulimala, and Anamudi all visible from up top, which is the kind of payoff that makes you forget your legs are filing a complaint."
     ],
+    mapLinks: [
+      { label: "Chokramudi Trek", url: "https://maps.app.goo.gl/2P9SNgUBj5XYMnDU9" }
+    ],
     footnote: "Steep enough to question your fitness, worth it for the summit view",
     slides: [
       {
@@ -85,6 +91,10 @@ const WAYPOINT_DATA = {
     paragraphs: [
       "Munnar's tea plantations have a way of making you forget you have a job, and Gap Road specifically seems designed to slow your brain down whether you want it to or not.",
       "Been here before on two wheels, this time by car — different pace, same effect. Mornings here are properly foggy and properly cold, the kind of cold that makes a plate of hot noodles from a roadside Gap Road stall feel like a genuine life event. The tea plantations do most of the emotional work here; there's something about all that green stretching into fog that resets whatever mental clutter you rode in with."
+    ],
+    mapLinks: [
+      { label: "Munnar", url: "https://maps.app.goo.gl/zSqKeQ3Nsw69Ehvp8" },
+      { label: "Gap Road", url: "https://maps.app.goo.gl/qKuAyC5fn86nmuJx9" }
     ],
     footnote: "Rode with friends · Also arrived once by car, which doesn't count as cheating",
     slides: [
@@ -119,6 +129,10 @@ const WAYPOINT_DATA = {
       "Mamalakandam is deep-forest Kerala at its most theatrical — thick tree cover, mist that doesn't burn off until well past sunrise, and a silence that makes every twig-snap sound personal.",
       "Left home before the sun did, which in hindsight was either brave or deeply questionable — riding solo through a pitch-dark forest road with nothing but a headlight and my own imagination working overtime is not for the faint of heart. Every shadow was definitely a wild elephant. It wasn't. Reached the hanging bridge just as the fog was lifting, and the view made the mild cardiac event on the way in completely worth it. Parked the bike on top of an off-road hill afterward just to sit there a while — no plan, no rush, just forest silence and the smug satisfaction of having survived my own nerves."
     ],
+    mapLinks: [
+      { label: "Mamalakandam", url: "https://maps.app.goo.gl/8LQL3yJT9R7ErU9XA" },
+      { label: "Inchatotty Hanging Bridge", url: "https://maps.app.goo.gl/SGCD5Ci5wuMFiTeu5" }
+    ],
     footnote: "Solo run · No one to blame for getting spooked but myself",
     slides: [
       {
@@ -152,6 +166,10 @@ const WAYPOINT_DATA = {
       "Meesapulimala is the kind of place that makes \"second highest peak in South India\" feel like an understatement — it's less a destination and more a separate atmosphere entirely.",
       "Went with three friends, stayed at a KDFC-run mansion the night before — clean rooms, decent food, and a genuinely good night's sleep before what turned out to be a long trek the next day. The Shola grasslands up here are also home to the Nilgiri tahr, a stocky, sure-footed mountain goat found almost nowhere else on Earth outside these high-altitude grasslands — spotting one mid-trek felt like the mountain personally approving of the effort. Ringing in the new year at that altitude, with that view, is hard to describe without sounding like a greeting card — so I won't try too hard. Magical is overused. It still applies here."
     ],
+    mapLinks: [
+      { label: "Meeshapulimala", url: "https://maps.app.goo.gl/ywoQivXs1H5bfEAx7" },
+      { label: "KFDC Office (Meeshapulimala)", url: "https://maps.app.goo.gl/P9atEzuK8GbkgZqr5" }
+    ],
     footnote: "Rode in with 3 friends · Stayed at the KDFC mansion, New Year's trek",
     slides: [
       {
@@ -184,6 +202,9 @@ const WAYPOINT_DATA = {
     paragraphs: [
       "Panchalimedu is one of those stops that sneaks up on you — you're technically just passing through en route to Vagamon, and then suddenly you're standing at a viewpoint with genuine mythological weight behind it.",
       "The place is tied to Mahabharata legend — locals will tell you it's linked to the Pandavas' exile, which adds a strange gravity to what is otherwise just a really good spot for photos. Calm, quiet, and criminally photogenic — the kind of stop that turns a five-minute break into a twenty-minute photoshoot without anyone planning it that way."
+    ],
+    mapLinks: [
+      { label: "Panchalimedu", url: "https://maps.app.goo.gl/uh36Qwu5M5kugHFr8" }
     ],
     footnote: "Rode with friends · Quick stop that turned into the highlight of the ride",
     slides: [
@@ -223,6 +244,10 @@ const WAYPOINT_DATA = {
       "Vagamon has become the default answer whenever the three of us need to disappear for a weekend — pine forests, rolling meadows, and just enough remoteness to feel like an actual escape without needing an entire week off.",
       "This has turned into something close to a monthly ritual, which still makes us laugh a little — \"we're doing this again?\" followed by immediately packing raw vegetables and instant noodles into a bag anyway. Bike if the budget allows, car if it doesn't; either way we're usually rolling in Saturday evening, cooking over a fire at our tent site on the mountain, and waking up to Sunday morning fog before heading back that evening. This round also took us through Ilaveezhapunchira — a crater-like valley locals call the \"meadow that never floods,\" oddly beautiful in an eerie sort of way — and Illikal Kallu, a massive rock formation with a genuinely vertigo-inducing viewpoint at the top. One word of warning that never gets old: leeches. Vagamon's undergrowth does not care about your ankles."
     ],
+    mapLinks: [
+      { label: "Vagamon", url: "https://maps.app.goo.gl/F9qB9BYMYb19YAmC7" },
+      { label: "S Valavu (Vagamon)", url: "https://maps.app.goo.gl/fmZ9KqvQGDtXJpW29" }
+    ],
     footnote: "Rode/drove with the usual 3 · Saturday to Sunday, cooked on-site, leech count: undisclosed",
     slides: [
       {
@@ -261,6 +286,9 @@ const WAYPOINT_DATA = {
       "Varkala's whole identity is \"cliffside beach town that refuses to take itself too seriously\" — dramatic red cliffs dropping straight into the Arabian Sea, and a nightlife scene that's earned it the \"mini Goa\" label fair and square.",
       "Took the train down with family this time, which meant actual scenery instead of watching the road — the stretch through Kottayam is solid green the entire way, easily one of the better train rides in the state. Booked a room for two nights on a weekday specifically to dodge the weekend crowd, and it worked — clean beach, quiet cliffs, and just enough nightlife buzz in the evenings to remind you you're still on a holiday, not a retreat. A proper change of pace from the usual routine — pure beach-brain for 48 hours."
     ],
+    mapLinks: [
+      { label: "Varkala", url: "https://maps.app.goo.gl/RnqKcUAqBjkpV8LP9" }
+    ],
     footnote: "Went with family · Two nights, weekday, zero regrets",
     slides: [
       {
@@ -293,6 +321,9 @@ const WAYPOINT_DATA = {
     paragraphs: [
       "Vaalparai sits up in the Anamalai hills like it's daring you to make the trip — hairpin bends, tea estates, and a border crossing into a completely different rhythm of life, all in one ride.",
       "Longest single-day ride I've ever done, solo, no overnight stop — just Vaalparai and back, returning via Pollachi on the Tamil Nadu side. People call it a \"seventh heaven\" kind of place and for once the hype held up — the roads, the views, the whole Tamil Nadu roadside-culture shift (different food, different pace, equally good) made the ride out feel effortless. The ride back is where reality caught up with me — turns out covering that much distance solo in a day catches up with your body whether your brain enjoyed itself or not."
+    ],
+    mapLinks: [
+      { label: "Vaalparai", url: "https://maps.app.goo.gl/jwcEUL7MnMzK2yco9" }
     ],
     footnote: "Solo ride · One day, there and back, questionable life choices regarding rest stops",
     slides: [
@@ -340,9 +371,22 @@ function initMapNavigation() {
   // Set Home // Kochi as initial default view
   focusOnHome(false);
 
+  // RAF rendering loop for 120Hz/60Hz latency-free touch tracking
+  let isRafScheduled = false;
+  function scheduleUpdate() {
+    if (!isRafScheduled) {
+      isRafScheduled = true;
+      requestAnimationFrame(() => {
+        surface.style.transform = `translate3d(${mapState.x}px, ${mapState.y}px, 0) scale(${mapState.scale})`;
+        isRafScheduled = false;
+      });
+    }
+  }
+
   // Mouse Drag Events
   viewport.addEventListener('mousedown', (e) => {
     if (e.target.closest('.waypoint-pin') || e.target.closest('button')) return;
+    surface.style.transition = 'none';
     mapState.isDragging = true;
     mapState.startX = e.clientX - mapState.x;
     mapState.startY = e.clientY - mapState.y;
@@ -352,30 +396,42 @@ function initMapNavigation() {
     if (!mapState.isDragging) return;
     mapState.x = e.clientX - mapState.startX;
     mapState.y = e.clientY - mapState.startY;
-    updateTransform();
-  });
+    scheduleUpdate();
+  }, { passive: true });
 
   window.addEventListener('mouseup', () => {
     mapState.isDragging = false;
   });
 
-  // Touch Events (Pan & Pinch-Zoom)
+  // Touch Events (High-Performance 1-finger Pan & Precise Midpoint Pinch-Zoom)
   let touchStartDist = 0;
   let initialScale = 1;
+  let pinchWorldX = 0;
+  let pinchWorldY = 0;
 
   viewport.addEventListener('touchstart', (e) => {
     if (e.target.closest('.waypoint-pin') || e.target.closest('button')) return;
+    // Clear any lingering CSS transition immediately for 0ms touch latency
+    surface.style.transition = 'none';
+
     if (e.touches.length === 1) {
       mapState.isDragging = true;
       mapState.startX = e.touches[0].clientX - mapState.x;
       mapState.startY = e.touches[0].clientY - mapState.y;
     } else if (e.touches.length === 2) {
       mapState.isDragging = false;
-      touchStartDist = Math.hypot(
-        e.touches[0].clientX - e.touches[1].clientX,
-        e.touches[0].clientY - e.touches[1].clientY
-      );
+      const t0 = e.touches[0];
+      const t1 = e.touches[1];
+      touchStartDist = Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY);
       initialScale = mapState.scale;
+
+      const rect = viewport.getBoundingClientRect();
+      const midX = (t0.clientX + t1.clientX) / 2 - rect.left;
+      const midY = (t0.clientY + t1.clientY) / 2 - rect.top;
+
+      // Pin the map coordinate directly under the midpoint between fingers
+      pinchWorldX = (midX - mapState.x) / initialScale;
+      pinchWorldY = (midY - mapState.y) / initialScale;
     }
   }, { passive: true });
 
@@ -383,26 +439,45 @@ function initMapNavigation() {
     if (e.touches.length === 1 && mapState.isDragging) {
       mapState.x = e.touches[0].clientX - mapState.startX;
       mapState.y = e.touches[0].clientY - mapState.startY;
-      updateTransform();
+      scheduleUpdate();
     } else if (e.touches.length === 2 && touchStartDist > 0) {
-      const currentDist = Math.hypot(
-        e.touches[0].clientX - e.touches[1].clientX,
-        e.touches[0].clientY - e.touches[1].clientY
-      );
-      const zoomFactor = currentDist / touchStartDist;
-      mapState.scale = Math.min(Math.max(initialScale * zoomFactor, mapState.minScale), mapState.maxScale);
-      updateTransform();
+      const t0 = e.touches[0];
+      const t1 = e.touches[1];
+      const currentDist = Math.hypot(t0.clientX - t1.clientX, t0.clientY - t1.clientY);
+      if (currentDist === 0) return;
+
+      const rect = viewport.getBoundingClientRect();
+      const currentMidX = (t0.clientX + t1.clientX) / 2 - rect.left;
+      const currentMidY = (t0.clientY + t1.clientY) / 2 - rect.top;
+
+      const newScale = Math.min(Math.max(initialScale * (currentDist / touchStartDist), mapState.minScale), mapState.maxScale);
+
+      // Keep (pinchWorldX, pinchWorldY) precisely anchored at (currentMidX, currentMidY)
+      mapState.x = currentMidX - pinchWorldX * newScale;
+      mapState.y = currentMidY - pinchWorldY * newScale;
+      mapState.scale = newScale;
+
+      scheduleUpdate();
     }
   }, { passive: true });
 
-  viewport.addEventListener('touchend', () => {
-    mapState.isDragging = false;
-    touchStartDist = 0;
-  });
+  viewport.addEventListener('touchend', (e) => {
+    if (e.touches.length === 1) {
+      // Finger lifted after pinch: seamlessly transition to 1-finger pan without position jump
+      mapState.isDragging = true;
+      mapState.startX = e.touches[0].clientX - mapState.x;
+      mapState.startY = e.touches[0].clientY - mapState.y;
+      touchStartDist = 0;
+    } else if (e.touches.length === 0) {
+      mapState.isDragging = false;
+      touchStartDist = 0;
+    }
+  }, { passive: true });
 
   // Scroll Wheel Zoom
   viewport.addEventListener('wheel', (e) => {
     e.preventDefault();
+    surface.style.transition = 'none';
     const zoomDelta = e.deltaY * -0.0015;
     const oldScale = mapState.scale;
     const newScale = Math.min(Math.max(oldScale + zoomDelta, mapState.minScale), mapState.maxScale);
@@ -415,7 +490,7 @@ function initMapNavigation() {
     mapState.y -= (mouseY - mapState.y) * (newScale / oldScale - 1);
     mapState.scale = newScale;
 
-    updateTransform();
+    scheduleUpdate();
   }, { passive: false });
 
   // Zoom & Point/Recenter Buttons
@@ -442,11 +517,12 @@ function initMapNavigation() {
     mapState.x -= (centerX - mapState.x) * (newScale / oldScale - 1);
     mapState.y -= (centerY - mapState.y) * (newScale / oldScale - 1);
     mapState.scale = newScale;
-    updateTransform();
-  }
 
-  function updateTransform() {
-    surface.style.transform = `translate(${mapState.x}px, ${mapState.y}px) scale(${mapState.scale})`;
+    surface.style.transition = 'transform 0.4s cubic-bezier(0.22, 0.68, 0.24, 1)';
+    surface.style.transform = `translate3d(${mapState.x}px, ${mapState.y}px, 0) scale(${mapState.scale})`;
+    setTimeout(() => {
+      surface.style.transition = '';
+    }, 420);
   }
 }
 
@@ -467,13 +543,13 @@ function focusOnHome(smooth = true) {
 
   if (smooth) {
     surface.style.transition = 'transform 0.6s cubic-bezier(0.22, 0.68, 0.24, 1)';
-    surface.style.transform = `translate(${mapState.x}px, ${mapState.y}px) scale(${mapState.scale})`;
+    surface.style.transform = `translate3d(${mapState.x}px, ${mapState.y}px, 0) scale(${mapState.scale})`;
     setTimeout(() => {
       surface.style.transition = '';
     }, 650);
   } else {
     surface.style.transition = '';
-    surface.style.transform = `translate(${mapState.x}px, ${mapState.y}px) scale(${mapState.scale})`;
+    surface.style.transform = `translate3d(${mapState.x}px, ${mapState.y}px, 0) scale(${mapState.scale})`;
   }
 }
 
@@ -496,7 +572,7 @@ function focusOnSpot(spotKey) {
   mapState.y = rect.height / 2 - targetY * mapState.scale;
 
   surface.style.transition = 'transform 0.6s cubic-bezier(0.22, 0.68, 0.24, 1)';
-  surface.style.transform = `translate(${mapState.x}px, ${mapState.y}px) scale(${mapState.scale})`;
+  surface.style.transform = `translate3d(${mapState.x}px, ${mapState.y}px, 0) scale(${mapState.scale})`;
 
   setTimeout(() => {
     surface.style.transition = '';
@@ -574,8 +650,28 @@ function openSpotLog(spotKey) {
   tagEl.textContent = data.tag;
   whenEl.textContent = data.when;
 
-  // Build natural paragraphs
-  storyEl.innerHTML = data.paragraphs.map(p => `<p class="spot-story-p">${p}</p>`).join('');
+  // Build natural paragraphs with Google Map links at the end
+  const parasHtml = data.paragraphs.map(p => `<p class="spot-story-p">${p}</p>`).join('');
+  const mapLinksHtml = (data.mapLinks && data.mapLinks.length > 0)
+    ? `<div class="spot-map-links">
+        ${data.mapLinks.map(link => {
+          const displayText = data.mapLinks.length > 1
+            ? `Get Directions (${link.label})`
+            : `Get Directions`;
+          return `
+            <a href="${link.url}" target="_blank" rel="noopener" class="spot-map-link">
+              <span>${displayText}</span>
+              <svg class="spot-map-link-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="6" y1="18" x2="18" y2="6"></line>
+                <polyline points="8 6 18 6 18 16"></polyline>
+              </svg>
+            </a>
+          `;
+        }).join('')}
+      </div>`
+    : '';
+
+  storyEl.innerHTML = parasHtml + mapLinksHtml;
   footnoteEl.textContent = data.footnote;
 
   // Build Carousel Slides

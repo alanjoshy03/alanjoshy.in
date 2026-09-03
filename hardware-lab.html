@@ -25,7 +25,7 @@
   <!-- ============ TOP BAR ============ -->
   <header class="hw-top-bar">
     <div class="hud-left">
-      <a href="/#lab" class="hud-back-btn" aria-label="Return to portfolio">
+      <a href="/" class="hud-back-btn" aria-label="Return to portfolio">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M19 12H5M12 19l-7-7 7-7" />
         </svg>
@@ -33,7 +33,7 @@
       </a>
       <div class="hud-title-wrap">
         <span class="hud-eyebrow">Hardware Lab</span>
-        <h1 class="hud-title">Things I've wired together</h1>
+        <h1 class="hud-title">Things I've built</h1>
       </div>
     </div>
 
@@ -68,7 +68,8 @@
         <div class="hw-photo-card" id="photoCard">
           <picture id="mainPicture">
             <source id="mainSourceWebp" srcset="images/hardware/ambient-light.webp" type="image/webp" />
-            <img src="images/hardware/ambient-light.jpg" alt="Desktop Ambient Light" class="hw-main-img" id="mainImg" width="1376" height="768" />
+            <img src="images/hardware/ambient-light.jpg" alt="Desktop Ambient Light" class="hw-main-img" id="mainImg"
+              width="1376" height="768" />
           </picture>
           <span class="hw-render-tag">Concept render — real build photos coming soon</span>
 
@@ -127,26 +128,36 @@
         <!-- Simple Conversational Narrative -->
         <div class="dossier-section">
           <h3 class="section-label">What It Does</h3>
-          <p class="dossier-body" id="dossierSummary">Samples the colour at the edges of whatever's on my monitor and throws matching light onto the wall behind it. Nothing scientific about it — it just stops the screen from being the one bright rectangle in an otherwise dark room.</p>
+          <p class="dossier-body" id="dossierSummary">Samples the colour at the edges of whatever's on my monitor and
+            throws matching light onto the wall behind it. Nothing scientific about it — it just stops the screen from
+            being the one bright rectangle in an otherwise dark room.</p>
         </div>
 
         <div class="dossier-section">
           <h3 class="section-label">Why I Built It</h3>
-          <p class="dossier-body" id="dossierStory">Started this because staring at a bright screen in a dark room for six hours straight isn't great on the eyes, and the cheap ambilight strips I looked at online were either laggy or needed their own app that phoned home to some server I didn't trust. So I built my own with an ESP32 grabbing edge colours over serial and pushing them out to an LED strip. There's a manual mode too, for when I just want a fixed colour instead of whatever's on screen.</p>
+          <p class="dossier-body" id="dossierStory">Started this because staring at a bright screen in a dark room for
+            six hours straight isn't great on the eyes, and the cheap ambilight strips I looked at online were either
+            laggy or needed their own app that phoned home to some server I didn't trust. So I built my own with an
+            ESP32 grabbing edge colours over serial and pushing them out to an LED strip. There's a manual mode too, for
+            when I just want a fixed colour instead of whatever's on screen.</p>
         </div>
 
         <div class="dossier-section">
           <h3 class="section-label">Real-World Highlights</h3>
           <ul class="dossier-highlights" id="dossierHighlights">
-            <li>Keeps up fine with fast-moving scenes — the odd frame lags a beat behind, but you'd have to be looking for it.</li>
-            <li>Manual mode for a fixed colour or a couple of preset patterns, controlled from the same dashboard as the other builds.</li>
-            <li>Whole thing cost less than one of the branded kits, and I actually know how to fix it when something breaks.</li>
+            <li>Keeps up fine with fast-moving scenes — the odd frame lags a beat behind, but you'd have to be looking
+              for it.</li>
+            <li>Manual mode for a fixed colour or a couple of preset patterns, controlled from the same dashboard as the
+              other builds.</li>
+            <li>Whole thing cost less than one of the branded kits, and I actually know how to fix it when something
+              breaks.</li>
           </ul>
         </div>
 
         <!-- Direct WhatsApp Action CTA -->
         <div class="dossier-action-wrap">
-          <a href="https://wa.me/916282406091?text=Hi%20Alan%2C%20saw%20the%20ambient%20light%20build%20on%20your%20site%20%E2%80%94%20could%20you%20build%20something%20similar%20for%20my%20desk%3F" target="_blank" rel="noopener" class="btn-whatsapp-order" id="whatsappOrderBtn">
+          <a href="https://wa.me/916282406091?text=Hi%20Alan%2C%20saw%20the%20ambient%20light%20build%20on%20your%20site%20%E2%80%94%20could%20you%20build%20something%20similar%20for%20my%20desk%3F"
+            target="_blank" rel="noopener" class="btn-whatsapp-order" id="whatsappOrderBtn">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
               <path
                 d="M12.031 2C6.496 2 2 6.484 2 12.015c0 1.947.556 3.763 1.516 5.305L2.05 22l4.832-1.43c1.477.838 3.183 1.314 5.149 1.314 5.535 0 10.03-4.484 10.03-10.015C22.062 6.484 17.566 2 12.031 2zm5.834 14.28c-.244.686-1.22 1.26-1.708 1.306-.474.045-.98.077-3.125-.81-2.274-.941-3.714-3.26-3.829-3.414-.114-.153-.915-1.218-.915-2.323 0-1.106.58-1.648.786-1.877.206-.23.45-.286.6-.286.152 0 .305.003.435.01.138.007.32.02.488.428.176.427.603 1.472.656 1.58.053.107.091.237.015.39-.076.153-.114.244-.229.382-.114.137-.244.305-.351.412-.122.122-.252.252-.107.504.145.252.648 1.07 1.39 1.732.953.85 1.754 1.114 2.006 1.236.252.122.397.107.542-.061.145-.168.618-.725.786-.977.168-.252.336-.214.565-.13.23.084 1.45.687 1.702.81.252.122.42.183.48.286.062.107.062.618-.182 1.304z" />
@@ -161,7 +172,8 @@
     <!-- Floating Pinpoint Tooltip -->
     <div class="hw-pin-popover" id="pinPopover">
       <h4 class="popover-title" id="popoverTitle">Colour sampling</h4>
-      <p class="popover-desc" id="popoverDesc">Grabs edge colours off the screen and pushes them to the strip over serial.</p>
+      <p class="popover-desc" id="popoverDesc">Grabs edge colours off the screen and pushes them to the strip over
+        serial.</p>
     </div>
 
   </main>
