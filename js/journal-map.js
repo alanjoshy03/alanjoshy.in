@@ -168,7 +168,7 @@ const WAYPOINT_DATA = {
     ],
     mapLinks: [
       { label: "Meeshapulimala", url: "https://maps.app.goo.gl/ywoQivXs1H5bfEAx7" },
-      { label: "KFDC Office (Meeshapulimala)", url: "https://maps.app.goo.gl/P9atEzuK8GbkgZqr5" }
+      { label: "KFDC Office", url: "https://maps.app.goo.gl/P9atEzuK8GbkgZqr5" }
     ],
     footnote: "Rode in with 3 friends · Stayed at the KDFC mansion, New Year's trek",
     slides: [
@@ -246,7 +246,7 @@ const WAYPOINT_DATA = {
     ],
     mapLinks: [
       { label: "Vagamon", url: "https://maps.app.goo.gl/F9qB9BYMYb19YAmC7" },
-      { label: "S Valavu (Vagamon)", url: "https://maps.app.goo.gl/fmZ9KqvQGDtXJpW29" }
+      { label: "S Valavu", url: "https://maps.app.goo.gl/fmZ9KqvQGDtXJpW29" }
     ],
     footnote: "Rode/drove with the usual 3 · Saturday to Sunday, cooked on-site, leech count: undisclosed",
     slides: [
@@ -655,10 +655,10 @@ function openSpotLog(spotKey) {
   const mapLinksHtml = (data.mapLinks && data.mapLinks.length > 0)
     ? `<div class="spot-map-links">
         ${data.mapLinks.map(link => {
-          const displayText = data.mapLinks.length > 1
-            ? `Get Directions (${link.label})`
-            : `Get Directions`;
-          return `
+      const displayText = data.mapLinks.length > 1
+        ? `Get Directions (${link.label})`
+        : `Get Directions`;
+      return `
             <a href="${link.url}" target="_blank" rel="noopener" class="spot-map-link">
               <span>${displayText}</span>
               <svg class="spot-map-link-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -667,7 +667,7 @@ function openSpotLog(spotKey) {
               </svg>
             </a>
           `;
-        }).join('')}
+    }).join('')}
       </div>`
     : '';
 

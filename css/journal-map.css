@@ -849,6 +849,27 @@ button {
   border-top: 1px solid var(--card-border);
 }
 
+.spot-modal-footer .btn-cta,
+#modalDoneBtn {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  cursor: pointer;
+}
+
+.spot-modal-footer .btn-cta:hover,
+.spot-modal-footer .btn-cta:focus,
+.spot-modal-footer .btn-cta:focus-visible,
+.spot-modal-footer .btn-cta:active,
+#modalDoneBtn:hover,
+#modalDoneBtn:focus,
+#modalDoneBtn:focus-visible,
+#modalDoneBtn:active {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 /* ---------------- Responsive Adjustments ---------------- */
 @media (max-width: 900px) {
   .map-hud-top {
