@@ -491,9 +491,7 @@ button {
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: rgba(10, 10, 14, 0.65);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: rgba(10, 10, 14, 0.78);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -502,7 +500,14 @@ button {
   box-sizing: border-box;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.35s var(--ease);
+  transition: opacity 0.28s var(--ease);
+}
+
+@supports (backdrop-filter: blur(4px)) or (-webkit-backdrop-filter: blur(4px)) {
+  .spot-modal-overlay {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
 }
 
 .spot-modal-overlay.is-open {
@@ -526,8 +531,10 @@ button {
   overflow: hidden;
   box-sizing: border-box;
   padding: 0;
+  contain: paint;
+  will-change: transform;
   transform: translateY(20px) scale(0.98);
-  transition: transform 0.35s var(--ease);
+  transition: transform 0.32s var(--ease);
   box-shadow: 0 32px 70px -18px rgba(0, 0, 0, 0.6);
 }
 
@@ -560,7 +567,9 @@ button {
   display: flex;
   width: 100%;
   height: 100%;
-  transition: transform 0.4s var(--ease);
+  will-change: transform;
+  transform: translateZ(0);
+  transition: transform 0.32s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .carousel-slide {
@@ -569,6 +578,7 @@ button {
   height: 100%;
   position: relative;
   cursor: zoom-in;
+  contain: paint layout;
 }
 
 .carousel-slide-art {
@@ -582,6 +592,7 @@ button {
   box-sizing: border-box;
   background-size: cover;
   background-position: center;
+  transform: translateZ(0);
 }
 
 /* Right: Content Column */
@@ -590,6 +601,7 @@ button {
   flex-direction: column;
   padding: 2.4rem 2.2rem 1.8rem;
   overflow-y: auto;
+  contain: content;
   scrollbar-width: thin;
   scrollbar-color: var(--card-border) transparent;
   box-sizing: border-box;
@@ -865,6 +877,9 @@ button {
     padding: 0;
     align-items: flex-end;
     justify-content: center;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(10, 10, 14, 0.88);
   }
 
   /* Native Bottom Sheet Card (Flex Column prevents grid track squishing) */
@@ -881,13 +896,20 @@ button {
     margin: 0;
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch;
-    transform: translateY(100%);
-    transition: transform 0.38s cubic-bezier(0.2, 0.9, 0.3, 1);
+    overscroll-behavior: contain;
+    contain: paint;
+    will-change: transform;
+    transform: translateZ(0) translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1);
     box-shadow: 0 -16px 48px rgba(0, 0, 0, 0.65);
   }
 
   .spot-modal-overlay.is-open .spot-modal-card {
-    transform: translateY(0);
+    transform: translateZ(0) translateY(0);
+  }
+
+  .spot-carousel-arrow {
+    display: none !important;
   }
 
   /* Subtle Grab Handle at top */
@@ -963,6 +985,9 @@ button {
     margin: 0;
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    contain: paint;
+    will-change: transform;
   }
 
   .spot-modal-media-col {

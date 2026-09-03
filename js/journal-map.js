@@ -651,7 +651,7 @@ function updateCarouselPosition() {
   const track = document.getElementById('modalCarouselTrack');
   const dots = document.querySelectorAll('.carousel-dot');
   if (track) {
-    track.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+    track.style.transform = `translate3d(-${currentSlideIndex * 100}%, 0, 0)`;
   }
   dots.forEach((d, idx) => {
     d.classList.toggle('is-active', idx === currentSlideIndex);
@@ -660,6 +660,7 @@ function updateCarouselPosition() {
 
 function initModalCarousel() {
   const overlay = document.getElementById('spotModalOverlay');
+  const card = document.getElementById('spotModalCard');
   const closeBtn = document.getElementById('spotModalClose');
   const doneBtn = document.getElementById('modalDoneBtn');
   const prevBtn = document.getElementById('modalCarouselPrev');
@@ -678,6 +679,11 @@ function initModalCarousel() {
   overlay?.addEventListener('click', (e) => {
     if (e.target === overlay) closeDossier();
   });
+
+  // Pause auto-advance when user is scrolling the modal notes to prevent frame drops
+  card?.addEventListener('scroll', () => {
+    stopAutoAdvance();
+  }, { passive: true });
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
@@ -705,6 +711,42 @@ function initModalCarousel() {
     goToSlide(currentSlideIndex + 1);
     restartAutoAdvance();
   });
+
+  // Passive touch swipe for instant, lag-free slide transitions on mobile
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchEndX = 0;
+  let touchEndY = 0;
+
+  container?.addEventListener('touchstart', (e) => {
+    if (e.touches && e.touches.length === 1) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchEndX = touchStartX;
+      touchEndY = touchStartY;
+      stopAutoAdvance();
+    }
+  }, { passive: true });
+
+  container?.addEventListener('touchmove', (e) => {
+    if (e.touches && e.touches.length === 1) {
+      touchEndX = e.touches[0].clientX;
+      touchEndY = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  container?.addEventListener('touchend', () => {
+    const diffX = touchEndX - touchStartX;
+    const diffY = touchEndY - touchStartY;
+    if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY) * 1.5) {
+      if (diffX < 0) {
+        goToSlide(currentSlideIndex + 1);
+      } else {
+        goToSlide(currentSlideIndex - 1);
+      }
+    }
+    restartAutoAdvance();
+  }, { passive: true });
 
   // Pause on hover, resume when leaving
   container?.addEventListener('mouseenter', () => {
