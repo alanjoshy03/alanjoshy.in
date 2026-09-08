@@ -474,6 +474,16 @@ function initMapNavigation() {
     }
   }, { passive: true });
 
+  window.addEventListener('touchend', () => {
+    mapState.isDragging = false;
+    touchStartDist = 0;
+  });
+
+  window.addEventListener('touchcancel', () => {
+    mapState.isDragging = false;
+    touchStartDist = 0;
+  });
+
   // Scroll Wheel Zoom
   viewport.addEventListener('wheel', (e) => {
     e.preventDefault();
@@ -633,6 +643,7 @@ function restartAutoAdvance() {
 }
 
 function openSpotLog(spotKey) {
+  mapState.isDragging = false;
   const data = WAYPOINT_DATA[spotKey];
   if (!data) return;
   currentSpotData = data;
@@ -640,6 +651,11 @@ function openSpotLog(spotKey) {
   isHoveringCarousel = false;
 
   const overlay = document.getElementById('spotModalOverlay');
+  const card = document.getElementById('spotModalCard');
+  if (card) {
+    card.style.transform = '';
+    card.style.transition = '';
+  }
   const titleEl = document.getElementById('modalTitle');
   const tagEl = document.getElementById('modalTag');
   const whenEl = document.getElementById('modalWhen');
@@ -678,7 +694,9 @@ function openSpotLog(spotKey) {
   buildCarouselSlides(data.slides);
 
   overlay.classList.add('is-open');
-  startAutoAdvance();
+  requestAnimationFrame(() => {
+    startAutoAdvance();
+  });
 }
 
 function buildCarouselSlides(slides) {
@@ -767,6 +785,10 @@ function initModalCarousel() {
     stopAutoAdvance();
     isHoveringCarousel = false;
     overlay.classList.remove('is-open');
+    if (card) {
+      card.style.transform = '';
+      card.style.transition = '';
+    }
   }
 
   closeBtn?.addEventListener('click', closeDossier);
@@ -854,6 +876,85 @@ function initModalCarousel() {
     isHoveringCarousel = false;
     startAutoAdvance();
   });
+
+  // Mobile Slide-Down / Swipe-Down to Dismiss Bottom Sheet
+  let sheetStartY = 0;
+  let sheetStartX = 0;
+  let sheetCurrentY = 0;
+  let isPullingSheet = false;
+  let canPullSheet = false;
+  let sheetTouchStartTime = 0;
+
+  card?.addEventListener('touchstart', (e) => {
+    if (window.innerWidth > 800) return;
+    if (e.touches.length !== 1) return;
+
+    sheetStartY = e.touches[0].clientY;
+    sheetStartX = e.touches[0].clientX;
+    sheetCurrentY = sheetStartY;
+    sheetTouchStartTime = performance.now();
+    canPullSheet = (card.scrollTop <= 0);
+    isPullingSheet = false;
+  }, { passive: true });
+
+  card?.addEventListener('touchmove', (e) => {
+    if (window.innerWidth > 800 || !canPullSheet || e.touches.length !== 1) return;
+
+    const currentY = e.touches[0].clientY;
+    const currentX = e.touches[0].clientX;
+    const deltaY = currentY - sheetStartY;
+    const deltaX = currentX - sheetStartX;
+
+    if (!isPullingSheet) {
+      if (deltaY > 8 && deltaY > Math.abs(deltaX) * 1.2 && card.scrollTop <= 0) {
+        isPullingSheet = true;
+      }
+    }
+
+    if (isPullingSheet && deltaY > 0) {
+      if (e.cancelable) e.preventDefault();
+      sheetCurrentY = currentY;
+      card.style.transition = 'none';
+      card.style.transform = `translateZ(0) translateY(${deltaY}px)`;
+    }
+  }, { passive: false });
+
+  const endSheetPull = () => {
+    if (window.innerWidth > 800 || !isPullingSheet) {
+      isPullingSheet = false;
+      canPullSheet = false;
+      return;
+    }
+
+    const deltaY = sheetCurrentY - sheetStartY;
+    const duration = performance.now() - sheetTouchStartTime;
+    const velocity = deltaY / Math.max(duration, 1);
+
+    isPullingSheet = false;
+    canPullSheet = false;
+
+    // Dismiss if pulled down > 80px or quick swipe down (> 35px at speed)
+    if (deltaY > 80 || (deltaY > 35 && velocity > 0.4)) {
+      card.style.transition = 'transform 0.28s cubic-bezier(0.2, 0.9, 0.3, 1)';
+      card.style.transform = 'translateZ(0) translateY(100%)';
+      setTimeout(() => {
+        closeDossier();
+        card.style.transform = '';
+        card.style.transition = '';
+      }, 260);
+    } else {
+      // Snap back up
+      card.style.transition = 'transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1)';
+      card.style.transform = 'translateZ(0) translateY(0)';
+      setTimeout(() => {
+        card.style.transition = '';
+        card.style.transform = '';
+      }, 260);
+    }
+  };
+
+  card?.addEventListener('touchend', endSheetPull, { passive: true });
+  card?.addEventListener('touchcancel', endSheetPull, { passive: true });
 }
 
 /* ---------------- Fullscreen Photo Lightbox Engine ---------------- */

@@ -596,6 +596,16 @@ function initXPulseRideLauncher() {
 
   btn.addEventListener('click', launchRide);
   bikeWrap?.addEventListener('click', launchRide);
+
+  // Reset overlay & bike state when navigating away or returning via browser back button (bfcache)
+  function resetRide() {
+    overlay.classList.remove('is-active');
+    bikeActor.classList.remove('is-starting', 'is-launching');
+    isLaunching = false;
+  }
+
+  window.addEventListener('pageshow', resetRide);
+  window.addEventListener('pagehide', resetRide);
 }
 
 /* ---------------- Hardware Lab Circuit Micro-Transition ---------------- */

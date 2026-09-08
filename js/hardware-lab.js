@@ -336,36 +336,42 @@ function initIdleMotion() {
   let mouseRotX = 0, mouseRotY = 0;
   let targetMouseRotX = 0, targetMouseRotY = 0;
   let rafId = null;
+  let frameCount = 0;
   const start = performance.now();
 
-  viewport.addEventListener('mousemove', (e) => {
-    const centerX = window.innerWidth * 0.3;
-    const centerY = window.innerHeight * 0.5;
-    const deltaX = (e.clientX - centerX) / centerX;
-    const deltaY = (e.clientY - centerY) / centerY;
-    targetMouseRotY = deltaX * 7;
-    targetMouseRotX = -deltaY * 6;
-  });
-  viewport.addEventListener('mouseleave', () => {
-    targetMouseRotX = 0;
-    targetMouseRotY = 0;
-  });
+  if (!window.matchMedia('(hover: none)').matches) {
+    viewport.addEventListener('mousemove', (e) => {
+      const centerX = window.innerWidth * 0.3;
+      const centerY = window.innerHeight * 0.5;
+      const deltaX = (e.clientX - centerX) / centerX;
+      const deltaY = (e.clientY - centerY) / centerY;
+      targetMouseRotY = deltaX * 7;
+      targetMouseRotX = -deltaY * 6;
+    });
+    viewport.addEventListener('mouseleave', () => {
+      targetMouseRotX = 0;
+      targetMouseRotY = 0;
+    });
+  }
 
   function tick(now) {
-    const t = (now - start) / 1000;
+    frameCount++;
+    if (frameCount % 2 === 0) {
+      const t = (now - start) / 1000;
 
-    // three independent-period sine waves so the motion never quite repeats on a short loop
-    const driftY = Math.sin(t * 0.42) * 9 + Math.sin(t * 0.17 + 1.3) * 4;
-    const rotX = Math.sin(t * 0.31 + 0.6) * 1.6 + Math.sin(t * 0.11) * 0.8;
-    const rotY = Math.sin(t * 0.23 + 2.1) * 2.4;
-    const breathe = 1 + Math.sin(t * 0.27) * 0.008;
+      // three independent-period sine waves so the motion never quite repeats on a short loop
+      const driftY = Math.sin(t * 0.42) * 9 + Math.sin(t * 0.17 + 1.3) * 4;
+      const rotX = Math.sin(t * 0.31 + 0.6) * 1.6 + Math.sin(t * 0.11) * 0.8;
+      const rotY = Math.sin(t * 0.23 + 2.1) * 2.4;
+      const breathe = 1 + Math.sin(t * 0.27) * 0.008;
 
-    // ease the mouse-driven rotation toward its target for a smooth blend with idle drift
-    mouseRotX += (targetMouseRotX - mouseRotX) * 0.06;
-    mouseRotY += (targetMouseRotY - mouseRotY) * 0.06;
+      // ease the mouse-driven rotation toward its target for a smooth blend with idle drift
+      mouseRotX += (targetMouseRotX - mouseRotX) * 0.06;
+      mouseRotY += (targetMouseRotY - mouseRotY) * 0.06;
 
-    assembly.style.transform =
-      `translateY(${driftY}px) rotateX(${rotX + mouseRotX}deg) rotateY(${rotY + mouseRotY}deg) scale(${breathe})`;
+      assembly.style.transform =
+        `translateY(${driftY}px) rotateX(${rotX + mouseRotX}deg) rotateY(${rotY + mouseRotY}deg) scale(${breathe})`;
+    }
 
     rafId = requestAnimationFrame(tick);
   }
