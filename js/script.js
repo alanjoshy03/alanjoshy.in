@@ -600,7 +600,7 @@ function initXPulseRideLauncher() {
   // Reset overlay & bike state when navigating away or returning via browser back button (bfcache)
   function resetRide() {
     overlay.classList.remove('is-active');
-    bikeActor.classList.remove('is-starting', 'is-launching');
+    bikeActor.classList.remove('is-hovered', 'is-starting', 'is-launching');
     isLaunching = false;
   }
 

@@ -432,7 +432,7 @@ html[data-theme="dark"] .icon-moon {
   min-height: 88vh;
   display: flex;
   align-items: center;
-  padding: 3rem 2rem 3.6rem;
+  padding: 5.5rem 2rem 3.6rem;
   overflow: hidden;
 }
 
@@ -1763,7 +1763,7 @@ html[data-theme="light"] .journal-card:not(.journal-card-upcoming):hover {
 }
 
 .connect-info-row a {
-  display: block;
+  display: inline-block;
   font-size: 0.98rem;
   margin-top: 0.2rem;
 }

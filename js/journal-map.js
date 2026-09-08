@@ -889,11 +889,16 @@ function initModalCarousel() {
     if (window.innerWidth > 800) return;
     if (e.touches.length !== 1) return;
 
+    // Only allow pull-down from the top handle / photo media area or header
+    // so scrolling content down and back up remains completely native and conflict-free
+    const isTopArea = Boolean(e.target.closest('.spot-modal-media-col') || e.target.closest('.spot-modal-header'));
+    if (!isTopArea && card.scrollTop > 0) return;
+
     sheetStartY = e.touches[0].clientY;
     sheetStartX = e.touches[0].clientX;
     sheetCurrentY = sheetStartY;
     sheetTouchStartTime = performance.now();
-    canPullSheet = (card.scrollTop <= 0);
+    canPullSheet = isTopArea || (card.scrollTop <= 0);
     isPullingSheet = false;
   }, { passive: true });
 
@@ -906,7 +911,7 @@ function initModalCarousel() {
     const deltaX = currentX - sheetStartX;
 
     if (!isPullingSheet) {
-      if (deltaY > 8 && deltaY > Math.abs(deltaX) * 1.2 && card.scrollTop <= 0) {
+      if (deltaY > 10 && deltaY > Math.abs(deltaX) * 1.3 && card.scrollTop <= 0) {
         isPullingSheet = true;
       }
     }
@@ -933,8 +938,8 @@ function initModalCarousel() {
     isPullingSheet = false;
     canPullSheet = false;
 
-    // Dismiss if pulled down > 80px or quick swipe down (> 35px at speed)
-    if (deltaY > 80 || (deltaY > 35 && velocity > 0.4)) {
+    // Dismiss if pulled down > 70px or quick swipe down
+    if (deltaY > 70 || (deltaY > 25 && velocity > 0.35)) {
       card.style.transition = 'transform 0.28s cubic-bezier(0.2, 0.9, 0.3, 1)';
       card.style.transform = 'translateZ(0) translateY(100%)';
       setTimeout(() => {
@@ -945,10 +950,9 @@ function initModalCarousel() {
     } else {
       // Snap back up
       card.style.transition = 'transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1)';
-      card.style.transform = 'translateZ(0) translateY(0)';
+      card.style.transform = '';
       setTimeout(() => {
         card.style.transition = '';
-        card.style.transform = '';
       }, 260);
     }
   };
